@@ -5,31 +5,31 @@ Subject: [PATCH] Sync potion effects
 
 
 diff --git a/src/main/java/net/minecraft/world/effect/MobEffectInstance.java b/src/main/java/net/minecraft/world/effect/MobEffectInstance.java
-index 6d5080ba244daf3b93d61d28ee0b88eb56bac723..3c5833e50a2acdf9da61fb8cb1a2d418a2d8d4ce 100644
+index 745e792482f61c571e2efbd4200dd1bdaef6e474..84c6daf76767e8f17e9abb7c58291dc062399397 100644
 --- a/src/main/java/net/minecraft/world/effect/MobEffectInstance.java
 +++ b/src/main/java/net/minecraft/world/effect/MobEffectInstance.java
-@@ -114,7 +114,7 @@ public class MobEffectInstance implements Comparable<MobEffectInstance> {
-             this.amplifier = that.amplifier;
-             this.duration = that.duration;
-             bl = true;
--        } else if (that.duration > this.duration) {
-+        } else if (that.duration >= this.duration) { // MultiPaper - Override the effect even if they're the same duration
-             if (that.amplifier == this.amplifier) {
-                 this.duration = that.duration;
-                 bl = true;
+@@ -153,7 +153,7 @@ public class MobEffectInstance implements Comparable<MobEffectInstance> {
+     }
+ 
+     private boolean isShorterDurationThan(MobEffectInstance effect) {
+-        return !this.isInfiniteDuration() && (this.duration < effect.duration || effect.isInfiniteDuration());
++        return !this.isInfiniteDuration() && (this.duration <= effect.duration || effect.isInfiniteDuration()); // MultiPaper - Override the effect even if they're the same duration
+     }
+ 
+     public boolean isInfiniteDuration() {
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 30079f4a8128adebb0995402de5800c9e96477c3..ec3031f5677488b87008bd7e7ab90ae63b5108f3 100644
+index 84c89c2660b39b955455a22512186c5d33c664b3..0fa6f32e3ebc82a6b4dbacc7c1d9d16d64300617 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -143,6 +143,7 @@ import org.bukkit.event.entity.EntityTeleportEvent;
- import org.bukkit.event.player.PlayerItemConsumeEvent;
+@@ -144,6 +144,7 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
+ import co.aikar.timings.MinecraftTimings; // Paper
  import puregero.multipaper.ExternalServerConnection;
  import puregero.multipaper.MultiPaper;
 +import puregero.multipaper.MultiPaperEffectsHandler;
  import puregero.multipaper.MultiPaperEntityInteractHandler;
  import puregero.multipaper.externalserverprotocol.EntityUpdatePacket;
  import puregero.multipaper.externalserverprotocol.HurtEntityPacket;
-@@ -1276,29 +1277,32 @@ public abstract class LivingEntity extends Entity {
+@@ -1271,29 +1272,32 @@ public abstract class LivingEntity extends Entity implements Attackable {
  
      protected void onEffectAdded(MobEffectInstance effect, @Nullable Entity source) {
          this.effectsDirty = true;

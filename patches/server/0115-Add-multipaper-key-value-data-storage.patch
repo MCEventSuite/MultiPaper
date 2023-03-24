@@ -5,21 +5,19 @@ Subject: [PATCH] Add multipaper key-value data storage
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index fd65e2279d7923397e0abd642202d1985456dafb..d674a0c14e2851088e0fc5e61afe14b21bfcf0d2 100644
+index e69027ddab12a421c047f5bbefc9e6ef393f1195..9eff76850d93259dc366303455bedd12da13f22d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -257,8 +257,10 @@ import org.yaml.snakeyaml.constructor.SafeConstructor;
- import org.yaml.snakeyaml.error.MarkedYAMLException;
- 
- import net.md_5.bungee.api.chat.BaseComponent; // Spigot
-+import puregero.multipaper.CraftMultiPaperDataStorage;
- import puregero.multipaper.CraftMultiPaperNotificationManager;
- import puregero.multipaper.MultiPaper;
-+import puregero.multipaper.MultiPaperDataStorage;
- import puregero.multipaper.config.MultiPaperConfiguration;
- import puregero.multipaper.externalserverprotocol.SubscribeToWorldPacket;
+@@ -256,6 +256,8 @@ import puregero.multipaper.externalserverprotocol.SubscribeToWorldPacket;
  import puregero.multipaper.permissions.MultiPaperPermissions;
-@@ -292,6 +294,7 @@ public final class CraftServer implements Server {
+ import puregero.multipaper.CraftMultiPaperNotificationManager;
+ import puregero.multipaper.config.MultiPaperConfiguration;
++import puregero.multipaper.CraftMultiPaperDataStorage;
++import puregero.multipaper.MultiPaperDataStorage;
+ 
+ import javax.annotation.Nullable; // Paper
+ import javax.annotation.Nonnull; // Paper
+@@ -286,6 +288,7 @@ public final class CraftServer implements Server {
      private final WorldMetadataStore worldMetadata = new WorldMetadataStore();
      private final Object2IntOpenHashMap<SpawnCategory> spawnCategoryLimit = new Object2IntOpenHashMap<>();
      private final CraftMultiPaperNotificationManager multipaperNotificationManager = new CraftMultiPaperNotificationManager(); // MultiPaper
@@ -27,7 +25,7 @@ index fd65e2279d7923397e0abd642202d1985456dafb..d674a0c14e2851088e0fc5e61afe14b2
      private File container;
      private Thread inTabCompletion; // MultiPaper
      private WarningState warningState = WarningState.DEFAULT;
-@@ -920,6 +923,11 @@ public final class CraftServer implements Server {
+@@ -913,6 +916,11 @@ public final class CraftServer implements Server {
      public @NotNull String getLocalServerName() {
          return MultiPaperConfiguration.get().masterConnection.myName;
      }

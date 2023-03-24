@@ -5,10 +5,10 @@ Subject: [PATCH] Sync respawn locations
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index d63cdab8b134c4539cefa1341cd07df872a38c78..9fa4398f3902d741b2efcf617fe41f2bd6ac6760 100644
+index a4b7fc3028cad477cef0ffe315bf097a2989bc16..12f8b0c3cf6640fbae5df112805c67871700d954 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -217,11 +217,11 @@ public class ServerPlayer extends Player {
+@@ -228,11 +228,11 @@ public class ServerPlayer extends Player {
      @Nullable
      private Vec3 enteredLavaOnVehiclePosition;
      private SectionPos lastSectionPos;
@@ -24,7 +24,7 @@ index d63cdab8b134c4539cefa1341cd07df872a38c78..9fa4398f3902d741b2efcf617fe41f2b
      private final TextFilter textFilter;
      private boolean textFilteringEnabled;
      private boolean allowsListing;
-@@ -2398,6 +2398,8 @@ public class ServerPlayer extends Player {
+@@ -2389,6 +2389,8 @@ public class ServerPlayer extends Player {
              this.respawnForced = false;
          }
  

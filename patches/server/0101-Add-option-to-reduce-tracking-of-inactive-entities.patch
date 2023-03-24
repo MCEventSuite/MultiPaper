@@ -25,10 +25,10 @@ index fe79c0add4f7cb18d487c5bb9415c40c5b551ea2..9b3c2e5b41e0475b3790d2029b427c93
          tickEntities = Timings.ofSafe(name + "tickEntities");
  
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 993cb8332626b4fa7a5e0718467b81dfc72d5535..c831ac91c3bd3e49a2fecb008664cfa7d8982778 100644
+index 1efc2b69427d6b0a394a3f9700e6af5c34563474..9102b644ffb443dc82428db0d410852951505351 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
-@@ -1252,6 +1252,8 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1259,6 +1259,8 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
  
      // Paper start - optimised tracker
      private final void processTrackQueue() {
@@ -37,7 +37,7 @@ index 993cb8332626b4fa7a5e0718467b81dfc72d5535..c831ac91c3bd3e49a2fecb008664cfa7
          //this.level.timings.tracker1.startTiming(); // Purpur
          try {
              for (TrackedEntity tracker : this.entityMap.values()) {
-@@ -1514,7 +1516,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
+@@ -1531,7 +1533,7 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
          // Paper start - use distance map to optimise tracker
          com.destroystokyo.paper.util.misc.PooledLinkedHashSets.PooledObjectLinkedOpenHashSet<ServerPlayer> lastTrackerCandidates;
  
@@ -47,10 +47,10 @@ index 993cb8332626b4fa7a5e0718467b81dfc72d5535..c831ac91c3bd3e49a2fecb008664cfa7
              this.lastTrackerCandidates = newTrackerCandidates;
  
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index 42b06fac6fe6d19bcc6c4b9b57fe4ab3d8e5a233..a7290a5f52a8006f9c266ef7d4943e75dfa32d11 100644
+index 1b1e47507a0a6a6748301b27bf03651a655912dd..cf7eb2b7e0ee8c30340745b51252e1d1bbb7c244 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
-@@ -55,7 +55,7 @@ public class ServerEntity {
+@@ -58,7 +58,7 @@ public class ServerEntity {
      private static final int TOLERANCE_LEVEL_ROTATION = 1;
      private final ServerLevel level;
      private final Entity entity;
@@ -59,7 +59,7 @@ index 42b06fac6fe6d19bcc6c4b9b57fe4ab3d8e5a233..a7290a5f52a8006f9c266ef7d4943e75
      private final boolean trackDelta;
      private final Consumer<Packet<?>> broadcast;
      private final VecDeltaCodec positionCodec = new VecDeltaCodec();
-@@ -70,6 +70,7 @@ public class ServerEntity {
+@@ -73,6 +73,7 @@ public class ServerEntity {
      private boolean wasOnGround;
      @Nullable
      private List<SynchedEntityData.DataValue<?>> trackedDataValues;
@@ -67,7 +67,7 @@ index 42b06fac6fe6d19bcc6c4b9b57fe4ab3d8e5a233..a7290a5f52a8006f9c266ef7d4943e75
      // CraftBukkit start
      public final Set<ServerPlayerConnection> trackedPlayers; // Paper - private -> package // Purpur - package -> public
  
-@@ -141,7 +142,7 @@ public class ServerEntity {
+@@ -152,7 +153,7 @@ public class ServerEntity {
              }
          }
  
@@ -77,10 +77,10 @@ index 42b06fac6fe6d19bcc6c4b9b57fe4ab3d8e5a233..a7290a5f52a8006f9c266ef7d4943e75
              int j;
  
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 5a7733b754fafa759d3ec601809e5e7243087803..1b2b6aecb191f7ace14bef45003666332d863b40 100644
+index 57cb273f40991ba03247751a201768c3b5243d74..a83222b83dab679b6729f83589b7fe13487e4477 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -180,6 +180,7 @@ import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet; // Paper
+@@ -182,6 +182,7 @@ import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet; // Paper
  import puregero.multipaper.MultiPaper;
  import puregero.multipaper.MultiPaperChunkHandler;
  import puregero.multipaper.MultiPaperEntitiesHandler;
@@ -88,7 +88,7 @@ index 5a7733b754fafa759d3ec601809e5e7243087803..1b2b6aecb191f7ace14bef4500366633
  import puregero.multipaper.externalserverprotocol.SpawnUpdatePacket;
  import puregero.multipaper.externalserverprotocol.TimeUpdatePacket;
  
-@@ -216,6 +217,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -214,6 +215,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
      private final ObjectLinkedOpenHashSet<BlockEventData> blockEvents;
      private final List<BlockEventData> blockEventsToReschedule;
      private boolean handlingTick;
@@ -96,7 +96,7 @@ index 5a7733b754fafa759d3ec601809e5e7243087803..1b2b6aecb191f7ace14bef4500366633
      private final List<CustomSpawner> customSpawners;
      @Nullable
      private final EndDragonFight dragonFight;
-@@ -1303,6 +1305,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1286,6 +1288,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
          //gameprofilerfiller.incrementCounter("tickNonPassenger"); // Purpur
          if (isActive) { // Paper - EAR 2
              TimingHistory.activatedEntityTicks++;
@@ -104,7 +104,7 @@ index 5a7733b754fafa759d3ec601809e5e7243087803..1b2b6aecb191f7ace14bef4500366633
          entity.tick();
          entity.postTick(); // CraftBukkit
          } else { entity.inactiveTick(); } // Paper - EAR 2
-@@ -1343,6 +1346,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1326,6 +1329,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
                  //gameprofilerfiller.incrementCounter("tickPassenger"); // Purpur
                  // Paper start - EAR 2
                  if (isActive) {
@@ -113,19 +113,19 @@ index 5a7733b754fafa759d3ec601809e5e7243087803..1b2b6aecb191f7ace14bef4500366633
                  passenger.postTick(); // CraftBukkit
                  } else {
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 93a4c87dde7cd79b3a6cafd2a24550e9b31afea9..4e0992664fa8112bf3f09d48e4a60d8cb8096dbf 100644
+index 469523c84d04ebb228e4ffcd40f600156cf20797..5d3e68dd917647487576dd3e9777da9c42878502 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -328,6 +328,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
-     public float maxUpStep;
+@@ -329,6 +329,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      public boolean noPhysics;
      protected final RandomSource random;
-+    public boolean sendChangesThisTick = false; // MultiPaper
      public int tickCount;
++    public boolean sendChangesThisTick = false; // MultiPaper
      public int remainingFireTicks;
      public boolean wasTouchingWater;
+     protected Object2DoubleMap<TagKey<Fluid>> fluidHeight;
 diff --git a/src/main/java/puregero/multipaper/MultiPaperEntitiesHandler.java b/src/main/java/puregero/multipaper/MultiPaperEntitiesHandler.java
-index b53ee9310d25bf1dedf076ca8ab4a5c6789fc298..4a7ce8097a479d474dab78f230987bc563c73e69 100644
+index 664a0e12a86eb2668f8d6c464d883beae155a2ba..5e305a1d472b0cef865701ef3bf9b1c47a2be4e3 100644
 --- a/src/main/java/puregero/multipaper/MultiPaperEntitiesHandler.java
 +++ b/src/main/java/puregero/multipaper/MultiPaperEntitiesHandler.java
 @@ -187,6 +187,10 @@ public class MultiPaperEntitiesHandler {

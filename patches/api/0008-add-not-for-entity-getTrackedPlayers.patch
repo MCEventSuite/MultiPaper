@@ -5,10 +5,10 @@ Subject: [PATCH] add not for entity#getTrackedPlayers
 
 
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 65349e06d50e7d3247ae36a36ff3cdf19b2d8029..12a69ecf648e0bdf3417b7ed04671156f2947add 100644
+index 978945b2854e86c558f3e75f2a93917d11d1396e..df08bc5ff12a6bc71a3a8ee0485bef5c2a3f493c 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -929,6 +929,10 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
+@@ -912,6 +912,10 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
  
      /**
       * Returns a set of {@link Player Players} within this entity's tracking range (players that can "see" this entity).

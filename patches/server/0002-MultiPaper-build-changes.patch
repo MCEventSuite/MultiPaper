@@ -5,7 +5,7 @@ Subject: [PATCH] MultiPaper build changes
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index f25c0557cf984b97e0ab361f579eccbf46f82170..d6c080782fb733180824fed7803c4c20434fc9c6 100644
+index 761bee802da0d3616ba0739434261b14a030805d..ed435725d4233209bcf2478a0c436878fa7c5725 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -7,7 +7,7 @@ plugins {
@@ -14,10 +14,10 @@ index f25c0557cf984b97e0ab361f579eccbf46f82170..d6c080782fb733180824fed7803c4c20
  dependencies {
 -    implementation(project(":purpur-api")) // Purpur
 +    implementation(project(":MultiPaper-API")) // MultiPaper // Purpur
-     // Pufferfish start
-     implementation("io.papermc.paper:paper-mojangapi:1.19.3-R0.1-SNAPSHOT") {
-         exclude("io.papermc.paper", "paper-api")
-@@ -78,13 +78,16 @@ tasks.jar {
+     implementation("io.papermc.paper:paper-mojangapi:1.19.4-R0.1-SNAPSHOT") // Purpur
+     // Paper start
+     implementation("org.jline:jline-terminal-jansi:3.21.0")
+@@ -60,13 +60,16 @@ tasks.jar {
      manifest {
          val git = Git(rootProject.layout.projectDirectory.path)
          val gitHash = git("rev-parse", "--short=7", "HEAD").getText().trim()
@@ -36,10 +36,10 @@ index f25c0557cf984b97e0ab361f579eccbf46f82170..d6c080782fb733180824fed7803c4c20
              "Specification-Title" to "Bukkit",
              "Specification-Version" to project.version,
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 076d6733c87d040b9da33c6845c63194f3b93ef4..d233f28d143861118cfee32050c0de0c7d2a2647 100644
+index fd51c0dcd6c56311fb5cea5fdcb2bbb730bc6571..69f7118fd686c7cbfcf2b1b1b33d608cb8167a41 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -261,7 +261,7 @@ import javax.annotation.Nullable; // Paper
+@@ -256,7 +256,7 @@ import javax.annotation.Nullable; // Paper
  import javax.annotation.Nonnull; // Paper
  
  public final class CraftServer implements Server {
@@ -62,7 +62,7 @@ index fb87620c742ff7912f5e8ccd2a7930dd605576d9..303135f6a8bb637751b944c5878fa1f5
  
          if (stream != null) {
 diff --git a/src/main/java/org/purpurmc/purpur/PurpurConfig.java b/src/main/java/org/purpurmc/purpur/PurpurConfig.java
-index c7c0ed8dfe58c841faf684a1fe228eeda6cd57b7..eb8b05b6098ecd4c46629b375c04d83e59c01639 100644
+index 0bcbe1f07ff8e552d2abd6e432af5710005acc04..ce87e6e66277fe3bc139e24605ca10ea54ea7bf7 100644
 --- a/src/main/java/org/purpurmc/purpur/PurpurConfig.java
 +++ b/src/main/java/org/purpurmc/purpur/PurpurConfig.java
 @@ -227,7 +227,7 @@ public class PurpurConfig {

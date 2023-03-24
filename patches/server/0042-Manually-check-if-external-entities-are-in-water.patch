@@ -5,10 +5,10 @@ Subject: [PATCH] Manually check if external entities are in water
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 35c1706986ae3e9677c04900f026a46f4feeda21..464c79a377d1b35b2c127e30678370ae082ab79b 100644
+index 68710e6e5a9b43adbb026cd6ebd3bd70bbb84b5a..9a794a3fb256e6ef04dc8a08e229bd11943384cc 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -1712,6 +1712,82 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1683,6 +1683,82 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public boolean isInWater() {
@@ -61,7 +61,7 @@ index 35c1706986ae3e9677c04900f026a46f4feeda21..464c79a377d1b35b2c127e30678370ae
 +                    for (int currY = minYIterate; currY < maxYIterate; ++currY) {
 +                        net.minecraft.world.level.chunk.LevelChunkSection section = sections[(currY >> 4) - minSection];
 +
-+                        if (section == null || section.hasOnlyAir() || section.fluidStateCount == 0) { // if no fluids, nothing in this section
++                        if (section == null || section.hasOnlyAir() || !section.isRandomlyTickingFluids()) { // if no fluids, nothing in this section
 +                            // empty
 +                            // skip to next section
 +                            currY = (currY & ~(15)) + 15; // increment by 15: iterator loop increments by the extra one

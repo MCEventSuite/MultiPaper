@@ -18,7 +18,7 @@ index e7fb035fb4beddbe28ad983df8c1229a2d17515e..c7858f259e4f5a2842db67d0dd00cc56
      public Timing tickTimer = MinecraftTimings.getTileEntityTimings(this); // Paper
      // CraftBukkit start - data containers
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index 034a0665f56fca37a48972671cebc6ec249db120..679af17f5bb673e285f1ee599cb9a6a864a2df40 100644
+index cba114f554644a37339c93026630c66c43f524b9..bdb45ed8c7fc27c13d748d623a3ffff885ea4405 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 @@ -6,11 +6,14 @@ import java.util.function.BooleanSupplier;
@@ -36,7 +36,7 @@ index 034a0665f56fca37a48972671cebc6ec249db120..679af17f5bb673e285f1ee599cb9a6a8
  import net.minecraft.world.CompoundContainer;
  import net.minecraft.world.Container;
  import net.minecraft.world.ContainerHelper;
-@@ -29,6 +32,7 @@ import net.minecraft.world.level.block.Block;
+@@ -28,6 +31,7 @@ import net.minecraft.world.level.block.Block;
  import net.minecraft.world.level.block.ChestBlock;
  import net.minecraft.world.level.block.HopperBlock;
  import net.minecraft.world.level.block.state.BlockState;
@@ -44,7 +44,7 @@ index 034a0665f56fca37a48972671cebc6ec249db120..679af17f5bb673e285f1ee599cb9a6a8
  import net.minecraft.world.phys.AABB;
  import net.minecraft.world.phys.shapes.BooleanOp;
  import net.minecraft.world.phys.shapes.Shapes;
-@@ -39,6 +43,9 @@ import org.bukkit.entity.HumanEntity;
+@@ -41,6 +45,9 @@ import org.bukkit.event.inventory.HopperInventorySearchEvent;
  import org.bukkit.event.inventory.InventoryMoveItemEvent;
  import org.bukkit.event.inventory.InventoryPickupItemEvent;
  import org.bukkit.inventory.Inventory;
@@ -54,7 +54,7 @@ index 034a0665f56fca37a48972671cebc6ec249db120..679af17f5bb673e285f1ee599cb9a6a8
  // CraftBukkit end
  
  public class HopperBlockEntity extends RandomizableContainerBlockEntity implements Hopper {
-@@ -254,7 +261,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -231,7 +238,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
                          origItemStack.setCount(originalItemCount - movedItemCount + remainingItemCount);
                      }
                      hopper.setItem(i, origItemStack);
@@ -63,7 +63,7 @@ index 034a0665f56fca37a48972671cebc6ec249db120..679af17f5bb673e285f1ee599cb9a6a8
                      return true;
                  }
                  origItemStack.setCount(originalItemCount);
-@@ -283,6 +290,20 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -260,6 +267,20 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
              }
          }
  
@@ -84,7 +84,7 @@ index 034a0665f56fca37a48972671cebc6ec249db120..679af17f5bb673e285f1ee599cb9a6a8
          final ItemStack remainingItem = addItem(container, hopper, movedItem, null);
          final int remainingItemCount = remainingItem.getCount();
          if (remainingItemCount != movedItemCount) {
-@@ -621,6 +642,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -633,6 +654,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
  
      private static ItemStack tryMoveInItem(@Nullable Container from, Container to, ItemStack stack, int slot, @Nullable Direction side) {
          ItemStack itemstack1 = to.getItem(slot);
@@ -92,7 +92,7 @@ index 034a0665f56fca37a48972671cebc6ec249db120..679af17f5bb673e285f1ee599cb9a6a8
  
          if (HopperBlockEntity.canPlaceItemInContainer(to, stack, slot, side)) {
              boolean flag = false;
-@@ -667,6 +689,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -679,6 +701,7 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
                      }
                  }
  
@@ -370,7 +370,7 @@ index 019b98edfa8d7f0120099ffc4aad0134cab9094a..a8d65f014702b229e9500f881231f71f
      private static void addPacket(Class<? extends ExternalServerPacket> clazz, Function<FriendlyByteBuf, ExternalServerPacket> deserializer) {
 diff --git a/src/main/java/puregero/multipaper/externalserverprotocol/PullItemFromContainerPacket.java b/src/main/java/puregero/multipaper/externalserverprotocol/PullItemFromContainerPacket.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..7e9ec7c53044e73e60a429731b4ab571c34636a9
+index 0000000000000000000000000000000000000000..0c1979d875598c84dfdf0e40cf8caeccfe0bc635
 --- /dev/null
 +++ b/src/main/java/puregero/multipaper/externalserverprotocol/PullItemFromContainerPacket.java
 @@ -0,0 +1,94 @@
@@ -409,7 +409,7 @@ index 0000000000000000000000000000000000000000..7e9ec7c53044e73e60a429731b4ab571
 +        this.source = blockEntity.getBlockPos();
 +        this.slot = slot;
 +        this.itemStack = itemStack;
-+        this.destination = new BlockPos(destinationHopper.getLevelX(), destinationHopper.getLevelY(), destinationHopper.getLevelZ());
++        this.destination = BlockPos.containing(destinationHopper.getLevelX(), destinationHopper.getLevelY(), destinationHopper.getLevelZ());
 +    }
 +
 +    public PullItemFromContainerPacket(FriendlyByteBuf in) {
@@ -454,7 +454,7 @@ index 0000000000000000000000000000000000000000..7e9ec7c53044e73e60a429731b4ab571
 +            } else {
 +                ItemStack origItemStack = container.getItem(this.slot);
 +                int count = Math.min(this.itemStack.getCount(), origItemStack.getCount());
-+                ItemStack pulledItemStack = origItemStack.cloneItemStack(true);
++                ItemStack pulledItemStack = origItemStack.copy(true);
 +                pulledItemStack.setCount(count);
 +                origItemStack.setCount(origItemStack.getCount() - count);
 +

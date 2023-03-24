@@ -5,10 +5,10 @@ Subject: [PATCH] Send server port to the master server
 
 
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index 6b6cac6dee300bc56f1104c1ebfdbe1bebf9c308..e6d2347ba62905a2620e0f851affe7bf0d265227 100644
+index a924c9e80d4470ac2be216735937ab1f08944f2f..80dc4b323a1f8b8c1a1688add33c6bc18369b786 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-@@ -266,6 +266,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+@@ -263,6 +263,7 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
              this.setPort(dedicatedserverproperties.serverPort);
          }
          bindAddress = new java.net.InetSocketAddress(inetaddress, this.getPort());

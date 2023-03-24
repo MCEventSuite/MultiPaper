@@ -5,10 +5,10 @@ Subject: [PATCH] Update external player spam counters
 
 
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 4430470d10b7f38be9936c104e31d543d0e6b99c..1ca016146af66e21769d35cff1bd6e91587109c6 100644
+index 3453f9d11eeb65d1b22d0571a625effba1de2cfd..afd0ffaa5aa943427d393c35a7a1efcca2abb542 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -451,20 +451,23 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -453,20 +453,23 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          // Paper end
  
          //this.server.getProfiler().pop(); // Purpur
@@ -46,32 +46,29 @@ index 4430470d10b7f38be9936c104e31d543d0e6b99c..1ca016146af66e21769d35cff1bd6e91
  
          if (this.player.getLastActionTime() > 0L && this.server.getPlayerIdleTimeout() > 0 && Util.getMillis() - this.player.getLastActionTime() > (long) (this.server.getPlayerIdleTimeout() * 1000 * 60) && !this.player.wonGame) { // Paper - Prevent AFK kick while watching end credits.
              // Purpur start
-@@ -488,6 +491,25 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
-         this.lastGoodZ = this.player.getZ();
-     }
+@@ -3799,4 +3802,22 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
  
+         InteractionResult run(ServerPlayer player, Entity entity, InteractionHand hand);
+     }
++
 +    // MultiPaper start
 +    public void reduceSpamCounters() {
 +        // CraftBukkit start
 +        for (int spam; (spam = this.chatSpamTickCount.get()) > 0 && !this.chatSpamTickCount.compareAndSet(spam, spam - 1); ) ;
 +        if (tabSpamLimiter.get() > 0) tabSpamLimiter.getAndDecrement(); // Paper - split to seperate variable
 +        if (recipeSpamPackets.get() > 0) recipeSpamPackets.getAndDecrement(); // Paper
-+        /* Use thread-safe field access instead
-+        if (this.chatSpamTickCount > 0) {
-+            --this.chatSpamTickCount;
-+        }
-+        */
++         /* Use thread-safe field access instead
++         if (this.chatSpamTickCount > 0) {
++             --this.chatSpamTickCount;
++         }
++         */
 +        // CraftBukkit end
-+
 +        if (this.dropSpamTickCount > 0) {
 +            --this.dropSpamTickCount;
 +        }
 +    }
 +    // MultiPaper end
-+
-     @Override
-     public Connection getConnection() {
-         return this.connection;
+ }
 diff --git a/src/main/java/puregero/multipaper/MultiPaper.java b/src/main/java/puregero/multipaper/MultiPaper.java
 index facebe82eba26a3c429a7ad77fb7ac4e34ea1bfc..0251479932cf25af6f34ddf168fdf7b5a80f8c00 100644
 --- a/src/main/java/puregero/multipaper/MultiPaper.java

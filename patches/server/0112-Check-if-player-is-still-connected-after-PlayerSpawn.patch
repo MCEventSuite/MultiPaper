@@ -6,10 +6,10 @@ Subject: [PATCH] Check if player is still connected after
 
 
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index c3008be61130e382a3cb0bb954c48bce61c47f39..db1ff07791b09f4fc383bba0229dec460200634c 100644
+index ae4f1dccda2ed1fb66219823271e3e067fb622c7..5933b5eceae0900f1e3ffefb9c397194e19e0cff 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -242,6 +242,13 @@ public abstract class PlayerList {
+@@ -271,6 +271,13 @@ public abstract class PlayerList {
          org.spigotmc.event.player.PlayerSpawnLocationEvent ev = new com.destroystokyo.paper.event.player.PlayerInitialSpawnEvent(spawnPlayer, spawnPlayer.getLocation()); // Paper use our duplicate event
          this.cserver.getPluginManager().callEvent(ev);
  
@@ -24,7 +24,7 @@ index c3008be61130e382a3cb0bb954c48bce61c47f39..db1ff07791b09f4fc383bba0229dec46
          worldserver1 = ((CraftWorld) loc.getWorld()).getHandle();
  
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index dbceca4df6a7cad64ec78703cd462d74b00fb1e3..87814e07042f1aa0232bba5f8ed8195a59e11412 100644
+index 16a34e3f983ac765ed7cdec13afcf19bcbb8fe1d..982576c76f5f11077db2eef715fd511dc87deeee 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -30,6 +30,7 @@ import java.util.concurrent.ConcurrentHashMap;
@@ -35,22 +35,18 @@ index dbceca4df6a7cad64ec78703cd462d74b00fb1e3..87814e07042f1aa0232bba5f8ed8195a
  import net.minecraft.advancements.AdvancementProgress;
  import net.minecraft.core.BlockPos;
  import net.minecraft.core.Holder;
-@@ -37,12 +38,14 @@ import net.minecraft.core.SectionPos;
- import net.minecraft.core.registries.BuiltInRegistries;
- import net.minecraft.nbt.CompoundTag;
- import net.minecraft.network.FriendlyByteBuf;
-+import net.minecraft.network.PacketSendListener;
- import net.minecraft.network.chat.Component;
- import net.minecraft.network.chat.PlayerChatMessage;
- import net.minecraft.network.protocol.game.ClientboundBlockDestructionPacket;
- import net.minecraft.network.protocol.game.ClientboundBlockUpdatePacket;
- import net.minecraft.network.protocol.game.ClientboundClearTitlesPacket;
- import net.minecraft.network.protocol.game.ClientboundCustomPayloadPacket;
+@@ -162,7 +163,9 @@ import puregero.multipaper.MultiPaper; // Multipaper Start
+ import puregero.multipaper.ExternalPlayer;
+ import puregero.multipaper.externalserverprotocol.PlayerDataUpdatePacket;
+ import puregero.multipaper.externalserverprotocol.PlayerListNameUpdatePacket;
+-import puregero.multipaper.externalserverprotocol.PlayerSayChatPacket; //Multipaper end
++import puregero.multipaper.externalserverprotocol.PlayerSayChatPacket;
 +import net.minecraft.network.protocol.game.ClientboundDisconnectPacket;
- import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
- import net.minecraft.network.protocol.game.ClientboundLevelEventPacket;
- import net.minecraft.network.protocol.game.ClientboundLevelParticlesPacket;
-@@ -645,6 +648,14 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
++import net.minecraft.network.PacketSendListener;//Multipaper end
+ 
+ @DelegateDeserialization(CraftOfflinePlayer.class)
+ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -646,6 +649,14 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
          final ServerGamePacketListenerImpl connection = this.getHandle().connection;
          if (connection != null) {
              connection.disconnect(message == null ? net.kyori.adventure.text.Component.empty() : message, cause);

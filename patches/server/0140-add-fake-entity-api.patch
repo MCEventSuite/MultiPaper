@@ -5,7 +5,7 @@ Subject: [PATCH] add fake entity api
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 4f8e2791ed45ddca5fec77d24e52b490146e2a2e..7a2c1178caa4c68e004746f05c67ad029d9ad9d2 100644
+index 69fe857650c549182878f0603411d0d840d6606a..7e3160c73bf9e5841695316dc5f33242597d4a7c 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -59,6 +59,7 @@ import net.minecraft.network.protocol.game.VecDeltaCodec;
@@ -16,7 +16,7 @@ index 4f8e2791ed45ddca5fec77d24e52b490146e2a2e..7a2c1178caa4c68e004746f05c67ad02
  import net.minecraft.resources.ResourceKey;
  import net.minecraft.resources.ResourceLocation;
  import io.papermc.paper.util.MCUtil;
-@@ -411,7 +412,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -412,7 +413,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      public boolean freezeLocked = false; // Paper - Freeze Tick Lock API
      public boolean collidingWithWorldBorder; // Paper
      public @Nullable Boolean immuneToFire = null; // Purpur - Fire immune API
@@ -25,7 +25,7 @@ index 4f8e2791ed45ddca5fec77d24e52b490146e2a2e..7a2c1178caa4c68e004746f05c67ad02
      public void setOrigin(@javax.annotation.Nonnull Location location) {
          this.origin = location.toVector();
          this.originWorld = location.getWorld().getUID();
-@@ -4904,4 +4905,19 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -4900,4 +4901,19 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          return false;
      }
      // Purpur end
@@ -46,10 +46,10 @@ index 4f8e2791ed45ddca5fec77d24e52b490146e2a2e..7a2c1178caa4c68e004746f05c67ad02
 +    // MultiPaper end
  }
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 68abc441d8b3ffebe6ac2475899cf32b445c3d73..f7b950e0d71bc545721ad417d1e7611eb9403977 100644
+index 17fa9c5340ab0fca1ef057a3eb022ce61ba58b97..f7eb2cc142e7882134a784c7d0821110862e48a2 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -1470,4 +1470,15 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+@@ -1506,4 +1506,15 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
          getHandle().immuneToFire = fireImmune;
      }
      // Purpur end
@@ -66,10 +66,10 @@ index 68abc441d8b3ffebe6ac2475899cf32b445c3d73..f7b950e0d71bc545721ad417d1e7611e
 +    // MultiPaper stop
  }
 diff --git a/src/main/java/puregero/multipaper/MultiPaperEntitiesHandler.java b/src/main/java/puregero/multipaper/MultiPaperEntitiesHandler.java
-index 4a7ce8097a479d474dab78f230987bc563c73e69..68103e725cd9b23ffcc51e7b70fa040ab705c4ed 100644
+index 5e305a1d472b0cef865701ef3bf9b1c47a2be4e3..8ec15817726ec7e6e61e899aa7c065744b2e6335 100644
 --- a/src/main/java/puregero/multipaper/MultiPaperEntitiesHandler.java
 +++ b/src/main/java/puregero/multipaper/MultiPaperEntitiesHandler.java
-@@ -335,7 +335,7 @@ public class MultiPaperEntitiesHandler {
+@@ -340,7 +340,7 @@ public class MultiPaperEntitiesHandler {
      }
  
      public static boolean shouldSyncEntity(Entity entity) {

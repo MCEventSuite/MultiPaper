@@ -5,20 +5,22 @@ Subject: [PATCH] Handle projectile hits on the entity's server
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
-index 07036d0f568d4baa1ffa36c39a7747cdd16a459d..2e2416e19927074e4c2596fce90d452941a2f36c 100644
+index 9fe21bd0e5b2eb123e347247dfdba21f0f3e9842..35165c17827056d16b82c461751a7b67614dfd9b 100644
 --- a/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
 +++ b/src/main/java/net/minecraft/world/entity/projectile/Projectile.java
-@@ -24,6 +24,9 @@ import net.minecraft.world.phys.HitResult;
- import net.minecraft.world.phys.Vec3;
+@@ -26,6 +26,11 @@ import net.minecraft.world.phys.Vec3;
  // CraftBukkit start
  import org.bukkit.projectiles.ProjectileSource;
+ // CraftBukkit end
++// MultiPaper Start
 +import puregero.multipaper.ExternalServerConnection;
 +import puregero.multipaper.MultiPaperEntityInteractHandler;
 +import puregero.multipaper.externalserverprotocol.ProjectileHitEntityPacket;
- // CraftBukkit end
++// MultiPaper end
  
- public abstract class Projectile extends Entity {
-@@ -34,6 +37,7 @@ public abstract class Projectile extends Entity {
+ public abstract class Projectile extends Entity implements TraceableEntity {
+ 
+@@ -35,6 +40,7 @@ public abstract class Projectile extends Entity implements TraceableEntity {
      public Entity cachedOwner;
      public boolean leftOwner;
      public boolean hasBeenShot;
@@ -26,7 +28,7 @@ index 07036d0f568d4baa1ffa36c39a7747cdd16a459d..2e2416e19927074e4c2596fce90d4529
  
      // CraftBukkit start
      protected boolean hitCancelled = false;
-@@ -207,10 +211,22 @@ public abstract class Projectile extends Entity {
+@@ -179,10 +185,22 @@ public abstract class Projectile extends Entity implements TraceableEntity {
      }
      // CraftBukkit end
  

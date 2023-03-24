@@ -5,10 +5,10 @@ Subject: [PATCH] Tick sleepCounter for external players
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
-index 9c2b7dbeec9ba26935e305e7f0be720a59171c1c..e79a9f75fa52e475d2af2d47bb0c2c9ad3ba3c69 100644
+index 3794ec1453cc3ab53f295d14e0b953114e58ea58..e8265a833862b9e02ba25a2967a1979b7079a2ce 100644
 --- a/src/main/java/net/minecraft/world/entity/player/Player.java
 +++ b/src/main/java/net/minecraft/world/entity/player/Player.java
-@@ -165,7 +165,7 @@ public abstract class Player extends LivingEntity {
+@@ -167,7 +167,7 @@ public abstract class Player extends LivingEntity {
      public double xCloak;
      public double yCloak;
      public double zCloak;

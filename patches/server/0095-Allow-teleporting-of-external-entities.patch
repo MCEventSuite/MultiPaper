@@ -5,27 +5,22 @@ Subject: [PATCH] Allow teleporting of external entities
 
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-index 65e1c03729b2f87aef6612a8bae621a14a86def4..68abc441d8b3ffebe6ac2475899cf32b445c3d73 100644
+index 5752137fcacc2a16c9143bf7e2ce3e2299a66d21..17fa9c5340ab0fca1ef057a3eb022ce61ba58b97 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftEntity.java
-@@ -7,6 +7,8 @@ import com.google.common.collect.Lists;
- import java.util.List;
- import java.util.Set;
- import java.util.UUID;
-+
-+import io.papermc.paper.chunk.system.scheduling.NewChunkHolder;
- import net.md_5.bungee.api.chat.BaseComponent;
- import net.minecraft.core.PositionImpl;
- import net.minecraft.nbt.CompoundTag;
-@@ -191,6 +193,7 @@ import org.bukkit.util.BoundingBox;
- import org.bukkit.util.NumberConversions;
+@@ -193,8 +193,9 @@ import org.bukkit.util.NumberConversions;
  import org.bukkit.util.Vector;
- import puregero.multipaper.MultiPaper;
-+import puregero.multipaper.externalserverprotocol.EntityTeleportPacket;
  
+ import net.md_5.bungee.api.chat.BaseComponent; // Spigot
+-import puregero.multipaper.MultiPaper; // Multipaper
+-
++import puregero.multipaper.MultiPaper; // Multipaper start
++import io.papermc.paper.chunk.system.scheduling.NewChunkHolder;
++import puregero.multipaper.externalserverprotocol.EntityTeleportPacket; // Multipaper end
  public abstract class CraftEntity implements org.bukkit.entity.Entity {
      private static PermissibleBase perm;
-@@ -596,6 +599,12 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
+     private static final CraftPersistentDataTypeRegistry DATA_TYPE_REGISTRY = new CraftPersistentDataTypeRegistry();
+@@ -610,6 +611,12 @@ public abstract class CraftEntity implements org.bukkit.entity.Entity {
              return true;
          }
  

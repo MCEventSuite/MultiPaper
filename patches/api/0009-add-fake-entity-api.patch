@@ -5,10 +5,10 @@ Subject: [PATCH] add fake entity api
 
 
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 12a69ecf648e0bdf3417b7ed04671156f2947add..626aa963059a4fced39f905c8f6b8124c6331e3d 100644
+index df08bc5ff12a6bc71a3a8ee0485bef5c2a3f493c..2ada21d0ca158a1b7226097bb93c851cc56d7afa 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -1045,4 +1045,20 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
+@@ -1028,4 +1028,20 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
       */
      void setImmuneToFire(@Nullable Boolean fireImmune);
      // Purpur end

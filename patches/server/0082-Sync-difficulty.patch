@@ -5,7 +5,7 @@ Subject: [PATCH] Sync difficulty
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 7c4ca7261d7441af9f60a639f64bf5065d4ad61e..317d48e521920555e37e1e958c6942646aa6d3b8 100644
+index a4508c07ce278346a46cce3813b281279224cf4c..7db9381f4da6d6d2e5dce73a8241cac33f41419c 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -195,6 +195,7 @@ import org.bukkit.event.server.ServerLoadEvent;
@@ -16,7 +16,7 @@ index 7c4ca7261d7441af9f60a639f64bf5065d4ad61e..317d48e521920555e37e1e958c694264
  
  public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTask> implements CommandSource, AutoCloseable {
  
-@@ -1783,6 +1784,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1807,6 +1808,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
              level.setSpawnSettings(worldData.getDifficulty() != Difficulty.PEACEFUL && ((DedicatedServer) this).settings.getProperties().spawnMonsters, this.isSpawningAnimals());
              // this.getPlayerList().getPlayers().forEach(this::sendDifficultyUpdate);
              // Paper end

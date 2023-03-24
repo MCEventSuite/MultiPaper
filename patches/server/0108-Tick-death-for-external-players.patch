@@ -5,11 +5,11 @@ Subject: [PATCH] Tick death for external players
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index ec3031f5677488b87008bd7e7ab90ae63b5108f3..0002d7dce8419252909d79afab8963a94e0b2f33 100644
+index 0fa6f32e3ebc82a6b4dbacc7c1d9d16d64300617..393279626bbc332872795de27ce01d11cdc96ee7 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -632,6 +632,14 @@ public abstract class LivingEntity extends Entity {
-         return false;
+@@ -632,6 +632,14 @@ public abstract class LivingEntity extends Entity implements Attackable {
+ 
      }
  
 +    // MultiPaper
@@ -20,9 +20,9 @@ index ec3031f5677488b87008bd7e7ab90ae63b5108f3..0002d7dce8419252909d79afab8963a9
 +    }
 +    // MultiPaper end
 +
-     protected void tickDeath() {
-         ++this.deathTime;
-         if (this.deathTime >= 20 && !this.level.isClientSide() && !this.isRemoved()) {
+     public boolean shouldDropExperience() {
+         return !this.isBaby();
+     }
 diff --git a/src/main/java/puregero/multipaper/MultiPaper.java b/src/main/java/puregero/multipaper/MultiPaper.java
 index 0251479932cf25af6f34ddf168fdf7b5a80f8c00..668555367671c566c2b6e8d7d2abbf05be6397be 100644
 --- a/src/main/java/puregero/multipaper/MultiPaper.java

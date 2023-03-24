@@ -5,10 +5,10 @@ Subject: [PATCH] Send crit animations as the entity being critted
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 9fa4398f3902d741b2efcf617fe41f2bd6ac6760..eea27d2c7ec6dfdd61ab49790219a18743ed10bf 100644
+index 12f8b0c3cf6640fbae5df112805c67871700d954..4b11e7551874c56c40219bb4c06be7342c634ae8 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -1947,12 +1947,12 @@ public class ServerPlayer extends Player {
+@@ -1955,12 +1955,12 @@ public class ServerPlayer extends Player {
  
      @Override
      public void crit(Entity target) {

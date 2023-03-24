@@ -6,7 +6,7 @@ Subject: [PATCH] Take control of external chunks to ensure a redstone
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index a8877879d0a5feec276aab23c2f1ee659e682c30..69085e4d9395b07d1828946e77437c80868ecfc0 100644
+index 92eaac20bbda0ebd7799f6caeeb718823f418759..a4508c07ce278346a46cce3813b281279224cf4c 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
 @@ -194,6 +194,7 @@ import org.bukkit.event.server.ServerLoadEvent;
@@ -17,7 +17,7 @@ index a8877879d0a5feec276aab23c2f1ee659e682c30..69085e4d9395b07d1828946e77437c80
  
  public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTask> implements CommandSource, AutoCloseable {
  
-@@ -1543,6 +1544,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1550,6 +1551,9 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
  
          this.isIteratingOverLevels = true; // Paper
          net.minecraft.network.FriendlyByteBuf.hasItemSerializeEvent = org.purpurmc.purpur.event.packet.NetworkItemSerializeEvent.getHandlerList().getRegisteredListeners().length > 0; // Purpur
@@ -28,10 +28,10 @@ index a8877879d0a5feec276aab23c2f1ee659e682c30..69085e4d9395b07d1828946e77437c80
          while (iterator.hasNext()) {
              ServerLevel worldserver = (ServerLevel) iterator.next();
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index f6e7062232f79cdd70cd3f8f01bb31f867d31d77..14aab6c72494e6d9adc3c8d45b973dccbb5faebd 100644
+index cd53068f1c1897a7fe9e4f18593afb654f068918..39a89a7bcfe07f0e1c385cbd25d09e87f900bdf4 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -837,6 +837,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -739,6 +739,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
              return false;
          } else {
              FluidState fluid = this.getFluidState(pos);
@@ -77,10 +77,10 @@ index 73d1adc5ddf0363966eac0c77c8dfbbb20a2b6a3..55ca70ac01a8586c66f49c71e21399bb
      }
  
 diff --git a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
-index d50f1eb0946875c50990390d647c8f4e30f24e01..373d1c653b18b8d0e42a7e9b0eafe33273b3cc19 100644
+index a0c348388ec4b2520949d2f809bb5482159fe022..29c17e42c1c0a1f0335046b3436cccb4fcecd357 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
-@@ -603,7 +603,13 @@ public class LevelChunk extends ChunkAccess {
+@@ -589,7 +589,13 @@ public class LevelChunk extends ChunkAccess {
                  boolean flag3 = iblockdata1.hasBlockEntity();
  
                  if (!this.level.isClientSide) {

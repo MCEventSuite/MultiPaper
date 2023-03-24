@@ -5,10 +5,10 @@ Subject: [PATCH] Sync enderchests
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 65c55890f030a54c06d03a812dbef9d4d882f42c..af0a4aa60d42464b95a5aa7819dc74a4a5bd28fe 100644
+index f461581d009eea1307bcb1b24070e439c3c519df..dddf27c109e621e439954ffa0c408efa827a2b0e 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -377,6 +377,7 @@ public class ServerPlayer extends Player {
+@@ -388,6 +388,7 @@ public class ServerPlayer extends Player {
          this.maxHealthCache = this.getMaxHealth();
          this.cachedSingleMobDistanceMap = new com.destroystokyo.paper.util.PooledHashSets.PooledObjectLinkedOpenHashSet<>(this); // Paper
          this.spawnInvulnerableTime = world.purpurConfig.playerSpawnInvulnerableTicks; // Purpur
@@ -112,10 +112,10 @@ index 0000000000000000000000000000000000000000..d8074c83ab7d10c14e59f86402b72487
 +    }
 +}
 diff --git a/src/main/java/puregero/multipaper/MultiPaperInventoryHandler.java b/src/main/java/puregero/multipaper/MultiPaperInventoryHandler.java
-index 1942813107ee93cf58bbb4a7676e8f43a4821ad2..faba13c2fb9f61dfaece07370608782f1cbc5ad9 100644
+index bb4d7cdcc54dedde29693bf83d0add0f06cdc91f..0cd15516dec4d6ee89d1fd2020d91279095697b8 100644
 --- a/src/main/java/puregero/multipaper/MultiPaperInventoryHandler.java
 +++ b/src/main/java/puregero/multipaper/MultiPaperInventoryHandler.java
-@@ -128,6 +128,7 @@ public class MultiPaperInventoryHandler {
+@@ -129,6 +129,7 @@ public class MultiPaperInventoryHandler {
              case "items" -> component = player.getInventory().items;
              case "armor" -> component = player.getInventory().armor;
              case "offhand" -> component = player.getInventory().offhand;

@@ -5,10 +5,10 @@ Subject: [PATCH] Sync mob navigation when handing over to another server
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/ai/navigation/PathNavigation.java b/src/main/java/net/minecraft/world/entity/ai/navigation/PathNavigation.java
-index 2f2d9bb31194618ef5bba39cd1cbe7c4919e82c5..7d95f3d67498aef2a043d88e75610ad80208fa26 100644
+index 6d127ed3da899851ca95b2be6792e2abca1aca12..47ef491deae34fbeb04ec98fe532a64a91ae9a62 100644
 --- a/src/main/java/net/minecraft/world/entity/ai/navigation/PathNavigation.java
 +++ b/src/main/java/net/minecraft/world/entity/ai/navigation/PathNavigation.java
-@@ -33,7 +33,7 @@ public abstract class PathNavigation {
+@@ -34,7 +34,7 @@ public abstract class PathNavigation {
      protected final Level level;
      @Nullable
      protected Path path;
@@ -18,7 +18,7 @@ index 2f2d9bb31194618ef5bba39cd1cbe7c4919e82c5..7d95f3d67498aef2a043d88e75610ad8
      protected int lastStuckCheck;
      protected Vec3 lastStuckCheckPos = Vec3.ZERO;
 diff --git a/src/main/java/puregero/multipaper/MultiPaperEntitiesHandler.java b/src/main/java/puregero/multipaper/MultiPaperEntitiesHandler.java
-index cdf00c101749d1fa76f8854542c3fc99150f2733..0b84e7e65fcad90a463b4ae40b0ce0abe37de7ef 100644
+index ae10cf3bda75d59e7803d86e058c3cf24900d48a..e929b786dffdf6457639c4a4381370388d0844b8 100644
 --- a/src/main/java/puregero/multipaper/MultiPaperEntitiesHandler.java
 +++ b/src/main/java/puregero/multipaper/MultiPaperEntitiesHandler.java
 @@ -128,6 +128,14 @@ public class MultiPaperEntitiesHandler {

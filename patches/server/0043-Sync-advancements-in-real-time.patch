@@ -5,10 +5,10 @@ Subject: [PATCH] Sync advancements in real time
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerAdvancements.java b/src/main/java/net/minecraft/server/PlayerAdvancements.java
-index 99477689bdf3e7d2fc1d66b56987aeb8c2484b65..701c0a7db02561e8d1137a3d811bf0e05bfe2c9b 100644
+index ce1c37a672e2a2c4ac3844a5b722fb5fe824675a..802e0524c3f2f0c04a43a959fd4bfc9275626cc3 100644
 --- a/src/main/java/net/minecraft/server/PlayerAdvancements.java
 +++ b/src/main/java/net/minecraft/server/PlayerAdvancements.java
-@@ -50,6 +50,7 @@ import net.minecraft.world.level.GameRules;
+@@ -47,6 +47,7 @@ import net.minecraft.world.level.GameRules;
  import org.slf4j.Logger;
  import puregero.multipaper.ExternalPlayer;
  import puregero.multipaper.MultiPaper;
@@ -16,7 +16,7 @@ index 99477689bdf3e7d2fc1d66b56987aeb8c2484b65..701c0a7db02561e8d1137a3d811bf0e0
  
  public class PlayerAdvancements {
  
-@@ -306,10 +307,11 @@ public class PlayerAdvancements {
+@@ -254,10 +255,11 @@ public class PlayerAdvancements {
                  return false;
              }
              // Paper end

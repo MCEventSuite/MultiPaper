@@ -5,10 +5,18 @@ Subject: [PATCH] Sync player files
 
 
 diff --git a/src/main/java/net/minecraft/server/PlayerAdvancements.java b/src/main/java/net/minecraft/server/PlayerAdvancements.java
-index ce42e91a95ccd42deff65e1942b918e9d789001b..99477689bdf3e7d2fc1d66b56987aeb8c2484b65 100644
+index 3919d9c193abcfd8b97dfb0ceb38638440f60fbe..ce1c37a672e2a2c4ac3844a5b722fb5fe824675a 100644
 --- a/src/main/java/net/minecraft/server/PlayerAdvancements.java
 +++ b/src/main/java/net/minecraft/server/PlayerAdvancements.java
-@@ -48,6 +48,8 @@ import net.minecraft.server.players.PlayerList;
+@@ -13,6 +13,7 @@ import com.mojang.serialization.Dynamic;
+ import com.mojang.serialization.JsonOps;
+ import java.io.BufferedWriter;
+ import java.io.IOException;
++import java.io.StringReader;
+ import java.nio.charset.StandardCharsets;
+ import java.nio.file.Files;
+ import java.nio.file.LinkOption;
+@@ -44,6 +45,8 @@ import net.minecraft.server.players.PlayerList;
  import net.minecraft.util.datafix.DataFixTypes;
  import net.minecraft.world.level.GameRules;
  import org.slf4j.Logger;
@@ -17,46 +25,47 @@ index ce42e91a95ccd42deff65e1942b918e9d789001b..99477689bdf3e7d2fc1d66b56987aeb8
  
  public class PlayerAdvancements {
  
-@@ -153,9 +155,13 @@ public class PlayerAdvancements {
+@@ -124,9 +127,13 @@ public class PlayerAdvancements {
      }
  
      private void load(ServerAdvancementManager advancementLoader) {
--        if (this.file.isFile()) {
+-        if (Files.isRegularFile(this.playerSavePath, new LinkOption[0])) {
 +        // MultiPaper start
 +        String json = ExternalPlayer.loadedAdvancements.remove(player.getUUID());
 +        if (json == null) json = MultiPaper.readAdvancements(player.server.storageSource.levelDirectory.path().getFileName().toString(), player.getStringUUID());
-+        if ((json != null && !json.isEmpty()) || this.file.isFile()) {
++        if ((json != null && !json.isEmpty()) || this.playerSavePath.toFile().isFile()) {
 +        // MultiPaper end
              try {
--                JsonReader jsonreader = new JsonReader(new StringReader(Files.toString(this.file, StandardCharsets.UTF_8)));
+-                JsonReader jsonreader = new JsonReader(Files.newBufferedReader(this.playerSavePath, StandardCharsets.UTF_8));
 +                JsonReader jsonreader = new JsonReader(new StringReader(json)); // MultiPaper
  
                  try {
                      jsonreader.setLenient(false);
-@@ -214,8 +220,9 @@ public class PlayerAdvancements {
+@@ -179,8 +186,8 @@ public class PlayerAdvancements {
          this.registerListeners(advancementLoader);
      }
  
 -    public void save() {
 -        if (org.spigotmc.SpigotConfig.disableAdvancementSaving) return; // Spigot
-+
-+    // MultiPaper start - create generateJson() from save()
++        // MultiPaper start - create generateJson() from save()
 +    public JsonElement generateJson() {
-         Map<ResourceLocation, AdvancementProgress> map = Maps.newHashMap();
-         Iterator iterator = this.advancements.entrySet().iterator();
+         Map<ResourceLocation, AdvancementProgress> map = new LinkedHashMap();
+         Iterator iterator = this.progress.entrySet().iterator();
  
-@@ -236,7 +243,22 @@ public class PlayerAdvancements {
+@@ -195,9 +202,21 @@ public class PlayerAdvancements {
  
-         jsonelement.getAsJsonObject().addProperty("DataVersion", SharedConstants.getCurrentVersion().getWorldVersion());
+         JsonElement jsonelement = PlayerAdvancements.GSON.toJsonTree(map);
  
+-        jsonelement.getAsJsonObject().addProperty("DataVersion", SharedConstants.getCurrentVersion().getDataVersion().getVersion());
+-
++        jsonelement.getAsJsonObject().addProperty("DataVersion",
++            SharedConstants.getCurrentVersion().getDataVersion().getVersion());
 +        return jsonelement;
 +    }
-+
 +    public void save() {
 +        if (org.spigotmc.SpigotConfig.disableAdvancementSaving) return; // Spigot
 +        JsonElement jsonelement = generateJson();
 +        // MultiPaper end
-+
          try {
 +            // MultiPaper start
 +            if (true) {
@@ -64,15 +73,22 @@ index ce42e91a95ccd42deff65e1942b918e9d789001b..99477689bdf3e7d2fc1d66b56987aeb8
 +                return;
 +            }
 +            // MultiPaper end
-+
-             FileOutputStream fileoutputstream = new FileOutputStream(this.file);
+             FileUtil.createDirectoriesSafe(this.playerSavePath.getParent());
+             BufferedWriter bufferedwriter = Files.newBufferedWriter(this.playerSavePath, StandardCharsets.UTF_8);
  
-             try {
+@@ -221,7 +240,6 @@ public class PlayerAdvancements {
+         } catch (IOException ioexception) {
+             PlayerAdvancements.LOGGER.error("Couldn't save player advancements to {}", this.playerSavePath, ioexception);
+         }
+-
+     }
+ 
+     public boolean award(Advancement advancement, String criterionName) {
 diff --git a/src/main/java/net/minecraft/server/players/PlayerList.java b/src/main/java/net/minecraft/server/players/PlayerList.java
-index bffef41525c10a5df581dfa390baef8a07e0c5cb..0902b98c9c1a2d2f9719c309fcfcf9a1bd47e291 100644
+index 90b7a1998cafbff39035d82a53c8f2772bf15a7a..f9e14d487355a7b40c3f88b02fbbe46a98bb5046 100644
 --- a/src/main/java/net/minecraft/server/players/PlayerList.java
 +++ b/src/main/java/net/minecraft/server/players/PlayerList.java
-@@ -539,6 +539,7 @@ public abstract class PlayerList {
+@@ -572,6 +572,7 @@ public abstract class PlayerList {
  
      protected void save(ServerPlayer player) {
          if (!player.getBukkitEntity().isPersistent()) return; // CraftBukkit
@@ -81,7 +97,7 @@ index bffef41525c10a5df581dfa390baef8a07e0c5cb..0902b98c9c1a2d2f9719c309fcfcf9a1
          this.playerIo.save(player);
          ServerStatsCounter serverstatisticmanager = (ServerStatsCounter) player.getStats(); // CraftBukkit
 diff --git a/src/main/java/net/minecraft/stats/ServerStatsCounter.java b/src/main/java/net/minecraft/stats/ServerStatsCounter.java
-index 72946e324c575ef39f3939225b96b68f724da460..e3aec9e92ce819305de2b1c10f45e66c926835ba 100644
+index 9501e5f25f5c4d3069e554d4dc82b0e094156682..d10973391535ba02cea34450e913ea9ce02f6670 100644
 --- a/src/main/java/net/minecraft/stats/ServerStatsCounter.java
 +++ b/src/main/java/net/minecraft/stats/ServerStatsCounter.java
 @@ -17,12 +17,9 @@ import it.unimi.dsi.fastutil.objects.ObjectIterator;
@@ -162,7 +178,7 @@ index 72946e324c575ef39f3939225b96b68f724da460..e3aec9e92ce819305de2b1c10f45e66c
      }
  
      @Override
-@@ -202,7 +219,7 @@ public class ServerStatsCounter extends StatsCounter {
+@@ -198,7 +215,7 @@ public class ServerStatsCounter extends StatsCounter {
          return nbttagcompound;
      }
  
@@ -172,7 +188,7 @@ index 72946e324c575ef39f3939225b96b68f724da460..e3aec9e92ce819305de2b1c10f45e66c
          ObjectIterator objectiterator = this.stats.object2IntEntrySet().iterator();
  
 diff --git a/src/main/java/net/minecraft/world/level/storage/PlayerDataStorage.java b/src/main/java/net/minecraft/world/level/storage/PlayerDataStorage.java
-index 601f8099f74e81c17600566b3c9b7a6dd39c9bcb..64c581abc3b74ef25e0571e9bada5a4262e5bd6a 100644
+index 36af81f0957d17e170d229059c66f4eb4539dfeb..98d818c7ae408e9f26ec261b900e721579af0acf 100644
 --- a/src/main/java/net/minecraft/world/level/storage/PlayerDataStorage.java
 +++ b/src/main/java/net/minecraft/world/level/storage/PlayerDataStorage.java
 @@ -17,15 +17,18 @@ import org.slf4j.Logger;
@@ -233,15 +249,17 @@ index 601f8099f74e81c17600566b3c9b7a6dd39c9bcb..64c581abc3b74ef25e0571e9bada5a42
              // CraftBukkit start
              if (player instanceof ServerPlayer) {
                  CraftPlayer player1 = (CraftPlayer) player.getBukkitEntity();
-@@ -91,6 +107,7 @@ public class PlayerDataStorage {
+@@ -91,8 +107,8 @@ public class PlayerDataStorage {
                  }
              }
              // CraftBukkit end
 +            */ // MultiPaper
-             int i = nbttagcompound.contains("DataVersion", 3) ? nbttagcompound.getInt("DataVersion") : -1;
+             int i = NbtUtils.getDataVersion(nbttagcompound, -1);
+-
+             player.load(ca.spottedleaf.dataconverter.minecraft.MCDataConverter.convertTag(ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry.PLAYER, nbttagcompound, i, net.minecraft.SharedConstants.getCurrentVersion().getDataVersion().getVersion())); // Paper - replace player converter
+         }
  
-             player.load(ca.spottedleaf.dataconverter.minecraft.MCDataConverter.convertTag(ca.spottedleaf.dataconverter.minecraft.datatypes.MCTypeRegistry.PLAYER, nbttagcompound, i, net.minecraft.SharedConstants.getCurrentVersion().getWorldVersion())); // Paper - replace player converter
-@@ -102,6 +119,8 @@ public class PlayerDataStorage {
+@@ -102,6 +118,8 @@ public class PlayerDataStorage {
      // CraftBukkit start
      public CompoundTag getPlayerData(String s) {
          try {
@@ -251,10 +269,10 @@ index 601f8099f74e81c17600566b3c9b7a6dd39c9bcb..64c581abc3b74ef25e0571e9bada5a42
  
              if (file1.exists()) {
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index b2e4eac89fb2dc223c2b2ae8e36fe430f3f689c5..e9ee990219119113b48ff64472cec90fe3a76201 100644
+index 350905a8353cbd5bad9dbb05c8d222bfb5f55ae5..2a2bb55c5bf67d0f7e05aeca5f9e2efcd48d88f8 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-@@ -156,6 +156,7 @@ import org.bukkit.scoreboard.Scoreboard;
+@@ -157,6 +157,7 @@ import org.bukkit.scoreboard.Scoreboard;
  import org.jetbrains.annotations.NotNull;
  
  import net.md_5.bungee.api.chat.BaseComponent; // Spigot
@@ -262,7 +280,7 @@ index b2e4eac89fb2dc223c2b2ae8e36fe430f3f689c5..e9ee990219119113b48ff64472cec90f
  
  @DelegateDeserialization(CraftOfflinePlayer.class)
  public class CraftPlayer extends CraftHumanEntity implements Player {
-@@ -1381,6 +1382,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
+@@ -1418,6 +1419,7 @@ public class CraftPlayer extends CraftHumanEntity implements Player {
  
      @Override
      public void saveData() {

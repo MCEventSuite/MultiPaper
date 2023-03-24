@@ -5,22 +5,22 @@ Subject: [PATCH] Hurt external entities
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 4357cf50eee48f8d77588ca9cd16d178ed52b0da..30079f4a8128adebb0995402de5800c9e96477c3 100644
+index fc69b057a099378364ef7166fd9209a4911de451..84c89c2660b39b955455a22512186c5d33c664b3 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -141,8 +141,11 @@ import org.bukkit.event.entity.EntityRegainHealthEvent;
- import org.bukkit.event.entity.EntityResurrectEvent;
- import org.bukkit.event.entity.EntityTeleportEvent;
- import org.bukkit.event.player.PlayerItemConsumeEvent;
+@@ -142,8 +142,11 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
+ // CraftBukkit end
+ 
+ import co.aikar.timings.MinecraftTimings; // Paper
 +import puregero.multipaper.ExternalServerConnection;
  import puregero.multipaper.MultiPaper;
 +import puregero.multipaper.MultiPaperEntityInteractHandler;
  import puregero.multipaper.externalserverprotocol.EntityUpdatePacket;
 +import puregero.multipaper.externalserverprotocol.HurtEntityPacket;
- // CraftBukkit end
  
+ public abstract class LivingEntity extends Entity implements Attackable {
  
-@@ -1375,6 +1378,15 @@ public abstract class LivingEntity extends Entity {
+@@ -1361,6 +1364,15 @@ public abstract class LivingEntity extends Entity implements Attackable {
  
      @Override
      public boolean hurt(DamageSource source, float amount) {
@@ -205,17 +205,14 @@ index 0000000000000000000000000000000000000000..8c031e466e1b95cedc93407bc89144d1
 +}
 diff --git a/src/main/java/puregero/multipaper/util/DamageSourceSerializer.java b/src/main/java/puregero/multipaper/util/DamageSourceSerializer.java
 new file mode 100644
-index 0000000000000000000000000000000000000000..b4d194d70cceacd9ef795ece2a40bdc00a403258
+index 0000000000000000000000000000000000000000..b231bb64f4aa5486f9af41fe3cb1719b1fc0a039
 --- /dev/null
 +++ b/src/main/java/puregero/multipaper/util/DamageSourceSerializer.java
-@@ -0,0 +1,182 @@
+@@ -0,0 +1,179 @@
 +package puregero.multipaper.util;
 +
 +import net.minecraft.server.level.ServerLevel;
 +import net.minecraft.world.damagesource.DamageSource;
-+import net.minecraft.world.damagesource.EntityDamageSource;
-+import net.minecraft.world.damagesource.IndirectEntityDamageSource;
-+import net.minecraft.world.damagesource.PointDamageSource;
 +import net.minecraft.world.entity.*;
 +import net.minecraft.world.entity.player.Player;
 +import net.minecraft.world.entity.projectile.*;
@@ -280,11 +277,11 @@ index 0000000000000000000000000000000000000000..b4d194d70cceacd9ef795ece2a40bdc0
 +        out.writeUTF(source.getMsgId());
 +        List<Entity> entities = new ArrayList<>();
 +
-+        if (source instanceof EntityDamageSource) {
++        if (source.getDirectEntity() != null) {
 +            entities.add(source.getDirectEntity());
 +        }
 +
-+        if (source instanceof IndirectEntityDamageSource) {
++        if (source.getEntity() != null) {
 +            entities.add(source.getEntity());
 +        }
 +
@@ -299,11 +296,11 @@ index 0000000000000000000000000000000000000000..b4d194d70cceacd9ef795ece2a40bdc0
 +            }
 +        }
 +
-+        if (source instanceof PointDamageSource pointDamageSource && pointDamageSource.getSourcePosition() != null) {
++        if (source.getSourcePosition() != null) {
 +            out.writeBoolean(true);
-+            out.writeDouble(pointDamageSource.getSourcePosition().x);
-+            out.writeDouble(pointDamageSource.getSourcePosition().y);
-+            out.writeDouble(pointDamageSource.getSourcePosition().z);
++            out.writeDouble(source.getSourcePosition().x);
++            out.writeDouble(source.getSourcePosition().y);
++            out.writeDouble(source.getSourcePosition().z);
 +        } else {
 +            out.writeBoolean(false);
 +        }
@@ -331,61 +328,61 @@ index 0000000000000000000000000000000000000000..b4d194d70cceacd9ef795ece2a40bdc0
 +        // Manual cases that don't work with the generated switch statement
 +        if (msgId.equals("mob")) {
 +            if (entities.length == 2) {
-+                return DamageSource.indirectMobAttack(entities[0], (LivingEntity) entities[1]);
++                return level.damageSources().mobProjectile(entities[0], (LivingEntity) entities[1]);
 +            } else {
-+                return DamageSource.mobAttack((LivingEntity) entities[0]);
++                return level.damageSources().mobAttack((LivingEntity) entities[0]);
 +            }
 +        } else if (msgId.equals("onFire")) {
 +            if (entities.length == 2) {
-+                return DamageSource.fireball((Fireball) entities[0], entities[1]);
++                return level.damageSources().fireball((Fireball) entities[0], entities[1]);
 +            } else {
-+                return DamageSource.ON_FIRE;
++                return level.damageSources().onFire();
 +            }
 +        }
 +
 +        // Generated switch statement
 +        return switch (msgId) {
-+            case "inFire" -> DamageSource.IN_FIRE;
-+            case "lightningBolt" -> DamageSource.LIGHTNING_BOLT;
++            case "inFire" -> level.damageSources().inFire();
++            case "lightningBolt" -> level.damageSources().lightningBolt();
 +//            case "onFire" -> DamageSource.ON_FIRE; // Handled above
-+            case "lava" -> DamageSource.LAVA;
-+            case "hotFloor" -> DamageSource.HOT_FLOOR;
-+            case "inWall" -> DamageSource.IN_WALL;
-+            case "cramming" -> DamageSource.CRAMMING;
-+            case "drown" -> DamageSource.DROWN;
-+            case "starve" -> DamageSource.STARVE;
-+            case "cactus" -> DamageSource.CACTUS;
-+            case "fall" -> DamageSource.FALL;
-+            case "flyIntoWall" -> DamageSource.FLY_INTO_WALL;
-+            case "outOfWorld" -> DamageSource.OUT_OF_WORLD;
-+            case "generic" -> DamageSource.GENERIC;
-+            case "magic" -> DamageSource.MAGIC;
-+            case "wither" -> DamageSource.WITHER;
-+            case "anvil" -> DamageSource.anvil(entities[0]);
-+            case "fallingBlock" -> DamageSource.fallingBlock(entities[0]);
-+            case "dragonBreath" -> DamageSource.DRAGON_BREATH;
-+            case "dryout" -> DamageSource.DRY_OUT;
-+            case "sweetBerryBush" -> DamageSource.SWEET_BERRY_BUSH;
-+            case "freeze" -> DamageSource.FREEZE;
-+            case "fallingStalactite" -> DamageSource.fallingStalactite(entities[0]);
-+            case "stalagmite" -> DamageSource.STALAGMITE;
-+            case "sting" -> DamageSource.sting((LivingEntity) entities[0]);
-+            case "arrow" -> DamageSource.arrow((AbstractArrow) entities[0], entities[1]);
-+            case "trident" -> DamageSource.trident(entities[0], entities[1]);
-+            case "fireworks" -> DamageSource.fireworks((FireworkRocketEntity) entities[0], entities[1]);
++            case "lava" -> level.damageSources().lava();
++            case "hotFloor" -> level.damageSources().hotFloor();
++            case "inWall" -> level.damageSources().inWall();
++            case "cramming" -> level.damageSources().cramming();
++            case "drown" -> level.damageSources().drown();
++            case "starve" -> level.damageSources().starve();
++            case "cactus" -> level.damageSources().cactus();
++            case "fall" -> level.damageSources().fall();
++            case "flyIntoWall" -> level.damageSources().flyIntoWall();
++            case "outOfWorld" -> level.damageSources().outOfWorld();
++            case "generic" -> level.damageSources().generic();
++            case "magic" -> level.damageSources().magic();
++            case "wither" -> level.damageSources().wither();
++            case "anvil" -> level.damageSources().anvil(entities[0]);
++            case "fallingBlock" -> level.damageSources().fallingBlock(entities[0]);
++            case "dragonBreath" -> level.damageSources().dragonBreath();
++            case "dryout" -> level.damageSources().dryOut();
++            case "sweetBerryBush" -> level.damageSources().sweetBerryBush();
++            case "freeze" -> level.damageSources().freeze();
++            case "fallingStalactite" -> level.damageSources().fallingStalactite(entities[0]);
++            case "stalagmite" -> level.damageSources().stalagmite();
++            case "sting" -> level.damageSources().sting((LivingEntity) entities[0]);
++            case "arrow" -> level.damageSources().arrow((AbstractArrow) entities[0], entities[1]);
++            case "trident" -> level.damageSources().trident(entities[0], entities[1]);
++            case "fireworks" -> level.damageSources().fireworks((FireworkRocketEntity) entities[0], entities[1]);
 +//            case "onFire" -> DamageSource.fireball((Fireball) entities[0], entities[1]); // Handled above
-+            case "thrown" -> DamageSource.thrown(entities[0], entities[1]);
-+            case "thorns" -> DamageSource.thorns(entities[0]);
++            case "thrown" -> level.damageSources().thrown(entities[0], entities[1]);
++            case "thorns" -> level.damageSources().thorns(entities[0]);
 +//            case "mob" -> DamageSource.mobAttack((LivingEntity) entities[0]); // Handled above
-+            case "explosion" -> DamageSource.explosion(entities[0], null);
-+            case "explosion.player" -> DamageSource.explosion(entities[0], entities[1]);
-+            case "witherSkull" -> DamageSource.witherSkull((WitherSkull) entities[0], entities[1]);
-+            case "indirectMagic" -> DamageSource.indirectMagic(entities[0], entities[1]);
++            case "explosion" -> level.damageSources().explosion(entities[0], null);
++            case "explosion.player" -> level.damageSources().explosion(entities[0], entities[1]);
++            case "witherSkull" -> level.damageSources().witherSkull((WitherSkull) entities[0], entities[1]);
++            case "indirectMagic" -> level.damageSources().indirectMagic(entities[0], entities[1]);
 +//            case "mob" -> DamageSource.indirectMobAttack(entities[0], (LivingEntity) entities[1]); // Handled above
-+            case "player" -> DamageSource.playerAttack((Player) entities[0]);
-+            case "badRespawnPoint" -> DamageSource.badRespawnPointExplosion(sourcePosition);
-+            case "fireball" -> DamageSource.fireball((Fireball) entities[0], entities[1]);
-+            case "sonic_boom" -> DamageSource.sonicBoom(entities[0]);
++            case "player" -> level.damageSources().playerAttack((Player) entities[0]);
++            case "badRespawnPoint" -> level.damageSources().badRespawnPointExplosion(sourcePosition);
++            case "fireball" -> level.damageSources().fireball((Fireball) entities[0], entities[1]);
++            case "sonic_boom" -> level.damageSources().sonicBoom(entities[0]);
 +            default -> throw new IOException("Unknown damage cause msgId of " + msgId);
 +        };
 +    }

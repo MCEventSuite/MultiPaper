@@ -5,18 +5,18 @@ Subject: [PATCH] Sync player cameras
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerPlayer.java b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-index 1946832c8c599919e245ce92515cc8860e8bc273..d63cdab8b134c4539cefa1341cd07df872a38c78 100644
+index b09a4741062379bef2b5b03bd3418ca00c7da57b..a4b7fc3028cad477cef0ffe315bf097a2989bc16 100644
 --- a/src/main/java/net/minecraft/server/level/ServerPlayer.java
 +++ b/src/main/java/net/minecraft/server/level/ServerPlayer.java
-@@ -2257,6 +2257,8 @@ public class ServerPlayer extends Player {
-         this.connection.send(new ClientboundSetCameraPacket(entity));
-         this.connection.resetPosition();
-         // Paper end
+@@ -2247,6 +2247,8 @@ public class ServerPlayer extends Player {
+ 
+             this.connection.send(new ClientboundSetCameraPacket(this.camera));
+             this.connection.resetPosition();
 +
-+        if (!PlayerSetCameraPacket.handlingSetCamera) MultiPaper.broadcastPacketToExternalServers(this, new PlayerSetCameraPacket(this, entity)); // MultiPaper
++            if (!PlayerSetCameraPacket.handlingSetCamera) MultiPaper.broadcastPacketToExternalServers(this, new PlayerSetCameraPacket(this, entity)); // MultiPaper
+         }
      }
  
-     @Override
 diff --git a/src/main/java/puregero/multipaper/externalserverprotocol/ExternalServerPacketSerializer.java b/src/main/java/puregero/multipaper/externalserverprotocol/ExternalServerPacketSerializer.java
 index c98c3235a7f82fafaf084a59f8b4fab62c9ecc91..dda10372b067684167c455b08dbc4ff582b76af0 100644
 --- a/src/main/java/puregero/multipaper/externalserverprotocol/ExternalServerPacketSerializer.java
