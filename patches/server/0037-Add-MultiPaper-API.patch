@@ -38,7 +38,7 @@ index edb726d7db0c2e1c276458c997bbfed9b76b69d4..29a88caa10ab4b32fd6229b2206b286f
      public boolean isForceLoaded() {
          return this.getWorld().isChunkForceLoaded(this.getX(), this.getZ());
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index f9d5164a9661eb50cd04203a018a6b214fec850d..a174a6e3bcf9d77117f682c31af533296e89d718 100644
+index 3a74ab99998856b4b7b5c91c4ee0c2b93ef43652..d271554f55e45327685c85717cf80b5340094afc 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -254,10 +254,12 @@ import net.md_5.bungee.api.chat.BaseComponent; // Spigot
@@ -53,7 +53,7 @@ index f9d5164a9661eb50cd04203a018a6b214fec850d..a174a6e3bcf9d77117f682c31af53329
 -
 +import org.jetbrains.annotations.NotNull; // MultiPaper
  public final class CraftServer implements Server {
-     private final String serverName = "MultiPaper"; // Paper // Purpur // MultiPaper
+     private final String serverName = "MultiPaper"; // Paper // Pufferfish // Purpur // Multipaper
      private final String serverVersion;
 @@ -283,6 +285,7 @@ public final class CraftServer implements Server {
      private final PlayerMetadataStore playerMetadata = new PlayerMetadataStore();
@@ -174,7 +174,7 @@ index 9f1017e2e51bd6e0c9a6a59663e1acbf17675f3b..5752137fcacc2a16c9143bf7e2ce3e22
      public int getFireTicks() {
          return entity.remainingFireTicks;
 diff --git a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
-index 2a2bb55c5bf67d0f7e05aeca5f9e2efcd48d88f8..69ada8602bb174fd3def43fef76307f6d2c31c37 100644
+index 8aedf3e0b58728d51dadfa07a9484cc7183ac688..ecdd3c01eec776536e51db8471ae124e10910063 100644
 --- a/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/entity/CraftPlayer.java
 @@ -26,6 +26,7 @@ import java.util.Optional;

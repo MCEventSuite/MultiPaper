@@ -5,10 +5,10 @@ Subject: [PATCH] Send all block updates to fix hoppers and pistons
 
 
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index 39a89a7bcfe07f0e1c385cbd25d09e87f900bdf4..ab4ebe777e04e3f32f3cf3ffc11965c252b4200c 100644
+index bc08d14017d334398e4def0f41d17ea214c36308..83b78e5f3354255157e22bac01ee525aea53067d 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
-@@ -678,7 +678,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -781,7 +781,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
                  this.setBlocksDirty(blockposition, iblockdata1, iblockdata2);
              }
  

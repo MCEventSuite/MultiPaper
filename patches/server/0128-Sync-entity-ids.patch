@@ -27,7 +27,7 @@ index 84c6e662d34d635179870ad43ccb08797b36cbd6..93e990fb3e88c44fdefc3bde905a190c
      public org.bukkit.event.player.PlayerQuitEvent.QuitReason quitReason = null; // Paper - there are a lot of changes to do if we change all methods leading to the event
      public boolean purpurClient = false; // Purpur
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 5d3e68dd917647487576dd3e9777da9c42878502..146c6d0ad9678fbaff6857c631a03d3196b636bd 100644
+index 8c3b177ce0edf03a5ca99b4f41c89df43bed19f3..1fff5da68a9242c4c4d69e4335f9365ba20f8b12 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -155,6 +155,8 @@ import puregero.multipaper.ExternalServer;
@@ -39,7 +39,7 @@ index 5d3e68dd917647487576dd3e9777da9c42878502..146c6d0ad9678fbaff6857c631a03d31
  import puregero.multipaper.externalserverprotocol.EntityRemovePacket;
  import puregero.multipaper.externalserverprotocol.EntityUpdateNBTPacket;
  import puregero.multipaper.externalserverprotocol.EntityUpdateWithDependenciesPacket;
-@@ -553,7 +555,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -581,7 +583,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      // Paper end - make end portalling safe
  
      public Entity(EntityType<?> type, Level world) {
@@ -48,7 +48,7 @@ index 5d3e68dd917647487576dd3e9777da9c42878502..146c6d0ad9678fbaff6857c631a03d31
          this.passengers = ImmutableList.of();
          this.deltaMovement = Vec3.ZERO;
          this.bb = Entity.INITIAL_AABB;
-@@ -2257,6 +2259,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -2291,6 +2293,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
  
      public CompoundTag saveWithoutId(CompoundTag nbt) {
          try {
@@ -56,7 +56,7 @@ index 5d3e68dd917647487576dd3e9777da9c42878502..146c6d0ad9678fbaff6857c631a03d31
              if (this.vehicle != null) {
                  nbt.put("Pos", this.newDoubleList(this.vehicle.getX(), this.getY(), this.vehicle.getZ()));
              } else {
-@@ -2363,9 +2366,11 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -2397,9 +2400,11 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
                      Entity entity = (Entity) iterator.next();
                      CompoundTag nbttagcompound1 = new CompoundTag();
  
@@ -68,7 +68,7 @@ index 5d3e68dd917647487576dd3e9777da9c42878502..146c6d0ad9678fbaff6857c631a03d31
                  }
  
                  if (!nbttaglist.isEmpty()) {
-@@ -2417,6 +2422,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -2451,6 +2456,18 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
  
      public void load(CompoundTag nbt) {
          try {

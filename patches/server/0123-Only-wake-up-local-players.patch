@@ -5,10 +5,10 @@ Subject: [PATCH] Only wake up local players
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index a83222b83dab679b6729f83589b7fe13487e4477..d2886a68d13aa6a59bfac5ca31f07f5be5d09c49 100644
+index 6bdeb06161aad38f794fdf957ff7311b258583b9..89d1aabac6d583320accd9447e76dce3122b1a62 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -842,7 +842,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -856,7 +856,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
  
      private void wakeUpAllPlayers() {
          this.sleepStatus.removeAllSleepers();

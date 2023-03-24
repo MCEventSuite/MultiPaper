@@ -5,7 +5,7 @@ Subject: [PATCH] Increase teleport sync frequency
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index 97c876cc0188a1a2991a191a2a7c90a5ad8eaa80..1b1e47507a0a6a6748301b27bf03651a655912dd 100644
+index a59ad143d16831e032b3a40338d05bd9dd5545ff..102f024336871729fe91f2bc7f00163203d1abe7 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
 @@ -194,7 +194,7 @@ public class ServerEntity {
@@ -14,6 +14,6 @@ index 97c876cc0188a1a2991a191a2a7c90a5ad8eaa80..1b1e47507a0a6a6748301b27bf03651a
  
 -                    if (!flag6 && this.teleportDelay <= 400 && !this.wasRiding && this.wasOnGround == this.entity.isOnGround() && !(io.papermc.paper.configuration.GlobalConfiguration.get().collisions.sendFullPosForHardCollidingEntities && this.entity.hardCollides())) { // Paper - send full pos for hard colliding entities to prevent collision problems due to desync
 +                    if (!flag6 && ((this.entity instanceof ServerPlayer && this.teleportDelay <= 60) || this.teleportDelay <= 400) && !this.wasRiding && this.wasOnGround == this.entity.isOnGround() && !(io.papermc.paper.configuration.GlobalConfiguration.get().collisions.sendFullPosForHardCollidingEntities && this.entity.hardCollides())) { // Paper - send full pos for hard colliding entities to prevent collision problems due to desync // MultiPaper - Increase teleport sync frequency for players
+                         if (flag2 || flag3 || this.entity instanceof AbstractArrow) { // Pufferfish
                          if ((!flag2 || !flag3) && !(this.entity instanceof AbstractArrow)) {
                              if (flag2) {
-                                 packet1 = new ClientboundMoveEntityPacket.Pos(this.entity.getId(), (short) ((int) k), (short) ((int) l), (short) ((int) i1), this.entity.isOnGround());

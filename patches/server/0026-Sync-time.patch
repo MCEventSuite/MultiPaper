@@ -5,10 +5,10 @@ Subject: [PATCH] Sync time
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index f404fac1401a96a7f57f6f60a09bc455aa91180a..92eaac20bbda0ebd7799f6caeeb718823f418759 100644
+index 00f439e5a884ae98d61bd54bbda09c6aa11a4320..fa9b432369bdc777e5f2a4a6b831e4282df76c22 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1534,6 +1534,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1536,6 +1536,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
              long worldTime = world.getGameTime();
              final ClientboundSetTimePacket worldPacket = new ClientboundSetTimePacket(worldTime, dayTime, doDaylight);
              for (Player entityhuman : world.players()) {
@@ -46,7 +46,7 @@ index f0a7a8df3caa2ea765bb0a87cfede71d0995d276..8b16d7f426d7f934a9569dd39605fa9c
              // CraftBukkit end
          }
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 932460aac50e7e9cc25c00f5c5e2a802a004c1e6..4f07b4b5dcbe1fbf89b7b46d3b40ce166da5dda6 100644
+index 2337d878a876afc339942fde2591900caf82794f..27b9c5ed151dfcb65ef9784a396b21726b8b5aab 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -176,7 +176,9 @@ import org.bukkit.event.world.TimeSkipEvent;

@@ -6,10 +6,10 @@ Subject: [PATCH] Add temporary debug logs for checking if a chunk can be
 
 
 diff --git a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
-index 29c17e42c1c0a1f0335046b3436cccb4fcecd357..9f24d68571ce07469d1cc066245f5c0132549439 100644
+index 31a9a037b8585777533ff0345200730cd630d61e..4e2920d98cbcd056dd92c830b33214a909cac492 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
-@@ -1061,8 +1061,16 @@ public class LevelChunk extends ChunkAccess {
+@@ -1075,8 +1075,16 @@ public class LevelChunk extends ChunkAccess {
          }
  
      }

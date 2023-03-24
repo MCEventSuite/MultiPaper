@@ -25,7 +25,7 @@ index fe79c0add4f7cb18d487c5bb9415c40c5b551ea2..9b3c2e5b41e0475b3790d2029b427c93
          tickEntities = Timings.ofSafe(name + "tickEntities");
  
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 1efc2b69427d6b0a394a3f9700e6af5c34563474..9102b644ffb443dc82428db0d410852951505351 100644
+index 42c790768b83036f8ef32d77d8cf9a747ae76865..7c72eb2183c011d4cbeb7c8188a0bb43c5851ab4 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
 @@ -1259,6 +1259,8 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
@@ -47,7 +47,7 @@ index 1efc2b69427d6b0a394a3f9700e6af5c34563474..9102b644ffb443dc82428db0d4108529
              this.lastTrackerCandidates = newTrackerCandidates;
  
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index 1b1e47507a0a6a6748301b27bf03651a655912dd..cf7eb2b7e0ee8c30340745b51252e1d1bbb7c244 100644
+index 102f024336871729fe91f2bc7f00163203d1abe7..cc654c11a56a171694a042124727bcb9c65d83f5 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
 @@ -58,7 +58,7 @@ public class ServerEntity {
@@ -77,7 +77,7 @@ index 1b1e47507a0a6a6748301b27bf03651a655912dd..cf7eb2b7e0ee8c30340745b51252e1d1
              int j;
  
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 57cb273f40991ba03247751a201768c3b5243d74..a83222b83dab679b6729f83589b7fe13487e4477 100644
+index 3bd1338579553913d460f294b2644e319f402c84..6bdeb06161aad38f794fdf957ff7311b258583b9 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -182,6 +182,7 @@ import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet; // Paper
@@ -96,7 +96,7 @@ index 57cb273f40991ba03247751a201768c3b5243d74..a83222b83dab679b6729f83589b7fe13
      private final List<CustomSpawner> customSpawners;
      @Nullable
      private final EndDragonFight dragonFight;
-@@ -1286,6 +1288,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1302,6 +1304,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
          //gameprofilerfiller.incrementCounter("tickNonPassenger"); // Purpur
          if (isActive) { // Paper - EAR 2
              TimingHistory.activatedEntityTicks++;
@@ -104,7 +104,7 @@ index 57cb273f40991ba03247751a201768c3b5243d74..a83222b83dab679b6729f83589b7fe13
          entity.tick();
          entity.postTick(); // CraftBukkit
          } else { entity.inactiveTick(); } // Paper - EAR 2
-@@ -1326,6 +1329,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1342,6 +1345,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
                  //gameprofilerfiller.incrementCounter("tickPassenger"); // Purpur
                  // Paper start - EAR 2
                  if (isActive) {
@@ -113,7 +113,7 @@ index 57cb273f40991ba03247751a201768c3b5243d74..a83222b83dab679b6729f83589b7fe13
                  passenger.postTick(); // CraftBukkit
                  } else {
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 469523c84d04ebb228e4ffcd40f600156cf20797..5d3e68dd917647487576dd3e9777da9c42878502 100644
+index 120ffca4af0b9c7d8bdd894c0b90408b1c333075..8c3b177ce0edf03a5ca99b4f41c89df43bed19f3 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -329,6 +329,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {

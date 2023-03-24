@@ -5,10 +5,10 @@ Subject: [PATCH] Manually check if external entities are in water
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 68710e6e5a9b43adbb026cd6ebd3bd70bbb84b5a..9a794a3fb256e6ef04dc8a08e229bd11943384cc 100644
+index 0f70245bd88389f2d2fea10e21e927ea956f4203..6a4e0274233df925f2d3eb6786c2841e9bd0b086 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -1683,6 +1683,82 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -1717,6 +1717,82 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      }
  
      public boolean isInWater() {

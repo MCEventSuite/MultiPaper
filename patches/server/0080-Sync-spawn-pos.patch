@@ -5,7 +5,7 @@ Subject: [PATCH] Sync spawn pos
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 5b4e5bc069a56d11e53dad2799054da7bc4655d8..57cb273f40991ba03247751a201768c3b5243d74 100644
+index bd840fde7c68f865b0de68874075cb0fbdb76f91..3bd1338579553913d460f294b2644e319f402c84 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -182,6 +182,7 @@ import it.unimi.dsi.fastutil.objects.ReferenceOpenHashSet; // Paper
@@ -16,7 +16,7 @@ index 5b4e5bc069a56d11e53dad2799054da7bc4655d8..57cb273f40991ba03247751a201768c3
  import puregero.multipaper.externalserverprotocol.TimeUpdatePacket;
  
  public class ServerLevel extends Level implements WorldGenLevel {
-@@ -2101,6 +2102,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -2117,6 +2118,7 @@ public class ServerLevel extends Level implements WorldGenLevel {
              this.removeTicketsForSpawn(this.paperConfig().spawn.keepSpawnLoadedRange * 16, prevSpawn);
              this.addTicketsForSpawn(this.paperConfig().spawn.keepSpawnLoadedRange * 16, pos);
          }

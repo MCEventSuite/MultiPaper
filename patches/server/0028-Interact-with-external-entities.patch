@@ -20,7 +20,7 @@ index 21068f766b75c414d5818073b7dca083d8ff4409..ddea3f0be603d70ae59c9c783e20aad0
          this.action = type;
          this.usingSecondaryAction = playerSneaking;
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 419e6dc00d33f46bc41a84212ae5ccd46660c2c1..5c6b7183bd74777b0dc6048abcfaac3a38c79ba5 100644
+index e6c1e3c12edc888d2496d58b161673825c41e49a..3131f8e5e946ef2ba81f74bcf336e8997103ec78 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -246,6 +246,7 @@ import org.bukkit.inventory.SmithingInventory;
@@ -31,7 +31,7 @@ index 419e6dc00d33f46bc41a84212ae5ccd46660c2c1..5c6b7183bd74777b0dc6048abcfaac3a
  import puregero.multipaper.MultiPaperInventoryHandler;
  import puregero.multipaper.MultiPaperPlayerHandler;
  import puregero.multipaper.externalserverprotocol.PlayerActionPacket;
-@@ -2880,6 +2881,8 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -2882,6 +2883,8 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          this.player.resetLastActionTime();
          this.player.setShiftKeyDown(packet.isUsingSecondaryAction());
          if (entity != null) {
@@ -41,7 +41,7 @@ index 419e6dc00d33f46bc41a84212ae5ccd46660c2c1..5c6b7183bd74777b0dc6048abcfaac3a
                  return;
              }
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index b846109bb2a247e14cd3c9ee0587887bee7c5ab0..68710e6e5a9b43adbb026cd6ebd3bd70bbb84b5a 100644
+index 183017c64a250a82463eb06d12c2f3448bebfda5..0f70245bd88389f2d2fea10e21e927ea956f4203 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -7,12 +7,14 @@ import com.google.common.collect.Lists;
@@ -98,7 +98,7 @@ index b846109bb2a247e14cd3c9ee0587887bee7c5ab0..68710e6e5a9b43adbb026cd6ebd3bd70
  // CraftBukkit end
  
  public abstract class Entity implements Nameable, EntityAccess, CommandSource {
-@@ -2714,6 +2723,13 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -2748,6 +2757,13 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
                  }).forEach((entity2) -> {
                      CriteriaTriggers.START_RIDING_TRIGGER.trigger((ServerPlayer) entity2);
                  });
@@ -112,7 +112,7 @@ index b846109bb2a247e14cd3c9ee0587887bee7c5ab0..68710e6e5a9b43adbb026cd6ebd3bd70
                  return true;
              }
          }
-@@ -2741,10 +2757,27 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -2775,10 +2791,27 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
      public void stopRiding(boolean suppressCancellation) {
          // Paper end
          if (this.vehicle != null) {
@@ -141,7 +141,7 @@ index b846109bb2a247e14cd3c9ee0587887bee7c5ab0..68710e6e5a9b43adbb026cd6ebd3bd70
  
      }
 diff --git a/src/main/java/net/minecraft/world/entity/player/Player.java b/src/main/java/net/minecraft/world/entity/player/Player.java
-index e0cb9ba70fe5e8d72e141c4b6b34373fe0838d7d..1aeb7cae36625976c8ee1be923ed295be2588181 100644
+index 58f4c864ce3699059f8a6b0cb2fd8a1475859399..2cb7ac4e3aa85213705ed45755c72c57fc4f3e6c 100644
 --- a/src/main/java/net/minecraft/world/entity/player/Player.java
 +++ b/src/main/java/net/minecraft/world/entity/player/Player.java
 @@ -125,6 +125,7 @@ import org.bukkit.event.entity.EntityCombustByEntityEvent;

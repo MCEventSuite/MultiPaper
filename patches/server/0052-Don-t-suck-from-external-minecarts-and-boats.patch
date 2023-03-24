@@ -5,7 +5,7 @@ Subject: [PATCH] Don't suck from external minecarts and boats
 
 
 diff --git a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
-index bdb45ed8c7fc27c13d748d623a3ffff885ea4405..8369797d9d8e6e486fc9de095ee5af7ccf6b0baf 100644
+index 475ad152e72a374ec44d2edd64226f56febe755f..9b32d72873e06963faec10d60d70ff5ca9541af8 100644
 --- a/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 +++ b/src/main/java/net/minecraft/world/level/block/entity/HopperBlockEntity.java
 @@ -47,6 +47,7 @@ import org.bukkit.event.inventory.InventoryPickupItemEvent;
@@ -16,7 +16,7 @@ index bdb45ed8c7fc27c13d748d623a3ffff885ea4405..8369797d9d8e6e486fc9de095ee5af7c
  import puregero.multipaper.externalserverprotocol.PullItemFromContainerPacket;
  // CraftBukkit end
  
-@@ -482,7 +483,12 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
+@@ -515,7 +516,12 @@ public class HopperBlockEntity extends RandomizableContainerBlockEntity implemen
      public static boolean suckInItems(Level world, Hopper hopper) {
          Container iinventory = HopperBlockEntity.getSourceContainer(world, hopper);
  

@@ -70,10 +70,10 @@ index ebf1ac089202c06fd2cc593dc12c21fe2d0a8de8..b20a423fb915d6088150162112bcea85
          // CraftBukkit start - fire BlockBreakEvent
          org.bukkit.block.Block bblock = CraftBlock.at(level, pos);
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index afd0ffaa5aa943427d393c35a7a1efcca2abb542..f86501b44fde201f9a71d0b6aa88d904d8724381 100644
+index 9da87fd1737a206f3af1a3404a0c6ef36265b906..f1451cc71afa998cca6203c275e568e4e21b1996 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-@@ -1959,6 +1959,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -1960,6 +1960,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
                  this.player.gameMode.captureSentBlockEntities = true;
                  // Paper end - send block entities after prediction
                  this.player.gameMode.handleBlockBreakAction(blockposition, packetplayinblockdig_enumplayerdigtype, packet.getDirection(), this.player.level.getMaxBuildHeight(), packet.getSequence());

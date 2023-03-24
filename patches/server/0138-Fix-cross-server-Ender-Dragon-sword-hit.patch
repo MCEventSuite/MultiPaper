@@ -6,10 +6,10 @@ Subject: [PATCH] Fix cross-server Ender Dragon sword hit.
 Made UUID and ID of dragon parts deterministic.
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 9bb59ca826355260e39718327a3c1b7dc3c8fbb4..909abbc5498600353577e68e18eb5f107ea731c0 100644
+index 863adfdd83b02d3ff931d124bfcddc079a447184..b93b8e391043b96c9193641b717bc0166d25db38 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
-@@ -1961,6 +1961,22 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -1977,6 +1977,22 @@ public class ServerLevel extends Level implements WorldGenLevel {
          return entity != null ? entity : (Entity) this.dragonParts.get(id);
      }
  
@@ -33,7 +33,7 @@ index 9bb59ca826355260e39718327a3c1b7dc3c8fbb4..909abbc5498600353577e68e18eb5f10
      public Entity getEntity(UUID uuid) {
          return (Entity) this.getEntities().get(uuid);
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 3a6f872c494665c9ab8bcb0c332df9aaaf3a0ecf..69fe857650c549182878f0603411d0d840d6606a 100644
+index 0ff0f2b4018621b687c91126cae8b22fc5f371a5..ea9ef86106794f24dc99970ea0b10a443105edce 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -161,6 +161,7 @@ import puregero.multipaper.externalserverprotocol.AddDeltaMovementPacket;
@@ -44,7 +44,7 @@ index 3a6f872c494665c9ab8bcb0c332df9aaaf3a0ecf..69fe857650c549182878f0603411d0d8
  // CraftBukkit end
  
  public abstract class Entity implements Nameable, EntityAccess, CommandSource {
-@@ -2464,6 +2465,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -2498,6 +2499,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
                  this.uuid = nbt.getUUID("UUID");
                  this.stringUUID = this.uuid.toString();
              }
@@ -117,7 +117,7 @@ index 998c72513df1dcd2b1316b320b3d5e7ca8e69fd4..7dc3669cf39a64514cf5f182261337eb
      @Override
      public net.minecraft.world.InteractionResult interact(net.minecraft.world.entity.player.Player player, net.minecraft.world.InteractionHand hand) {
 diff --git a/src/main/java/net/minecraft/world/entity/boss/enderdragon/EnderDragon.java b/src/main/java/net/minecraft/world/entity/boss/enderdragon/EnderDragon.java
-index bf8e4ccf99d293c31141a89d7947b1d9e881ac35..fb190522801ae8203d90f0ae49ff976323ca4c59 100644
+index b6ac41633e91f6ee2755d1f05aac4c8046a4aa8a..362d9f355a9a32337ba9fe59856aa08bef441e15 100644
 --- a/src/main/java/net/minecraft/world/entity/boss/enderdragon/EnderDragon.java
 +++ b/src/main/java/net/minecraft/world/entity/boss/enderdragon/EnderDragon.java
 @@ -4,6 +4,7 @@ import com.google.common.collect.Lists;

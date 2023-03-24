@@ -5,7 +5,7 @@ Subject: [PATCH] Add zstd compression
 
 
 diff --git a/build.gradle.kts b/build.gradle.kts
-index faa911fcb9e645989be96f3bdeedd2fa21485058..b01a2fa7c5139ada2994eb73100963fa3cbaa187 100644
+index b4a37abcf395b4899b599bd350db748406e97af7..26b3bece6079c7415ca82c2489178ef045a31c11 100644
 --- a/build.gradle.kts
 +++ b/build.gradle.kts
 @@ -46,6 +46,7 @@ dependencies {
@@ -14,8 +14,8 @@ index faa911fcb9e645989be96f3bdeedd2fa21485058..b01a2fa7c5139ada2994eb73100963fa
      runtimeOnly("org.apache.maven.resolver:maven-resolver-transport-http:1.7.3")
 +    implementation("com.github.luben:zstd-jni:1.5.2-2") // MultiPaper
  
-     testImplementation("io.github.classgraph:classgraph:4.8.47") // Paper - mob goal test
-     testImplementation("junit:junit:4.13.2")
+     // Pufferfish start
+     implementation("org.yaml:snakeyaml:1.32")
 diff --git a/src/main/java/puregero/multipaper/ExternalServerConnection.java b/src/main/java/puregero/multipaper/ExternalServerConnection.java
 index c5abd55879ea5e317806e435f7be7b10489ffa12..972ce9b9a6e681c329fdc31165c2dc5c3166be32 100644
 --- a/src/main/java/puregero/multipaper/ExternalServerConnection.java

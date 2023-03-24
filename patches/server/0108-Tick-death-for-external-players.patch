@@ -5,10 +5,10 @@ Subject: [PATCH] Tick death for external players
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 0fa6f32e3ebc82a6b4dbacc7c1d9d16d64300617..393279626bbc332872795de27ce01d11cdc96ee7 100644
+index 2d8041bdc1dd22d79472649d2e9c6bb862fb05d2..b132c5d8640684fb6aba13e0233d9527298aebbd 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-@@ -632,6 +632,14 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -633,6 +633,14 @@ public abstract class LivingEntity extends Entity implements Attackable {
  
      }
  

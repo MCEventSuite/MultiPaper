@@ -490,7 +490,7 @@ index 904fcdeb7937d36208cc9a8d5eca9ef3a5b2cd9e..ceab4f65caa60c42c4e8ca3937445fd9
          // there can be potential desync with player's last mapped section and the view distance map, so use the
          // view distance map here.
 diff --git a/src/main/java/net/minecraft/server/level/ChunkMap.java b/src/main/java/net/minecraft/server/level/ChunkMap.java
-index 1a08443a081014b5fd73d72170c7d5a89cce1638..a034030f055fed7e8e29643cd00e91a107e42df3 100644
+index 8068fc37a4303afab28c3523a73c50e7ccddd57c..04c42492605e0ced82a393e7321cf56317e4620e 100644
 --- a/src/main/java/net/minecraft/server/level/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/level/ChunkMap.java
 @@ -972,6 +972,8 @@ public class ChunkMap extends ChunkStorage implements ChunkHolder.PlayerProvider
@@ -503,7 +503,7 @@ index 1a08443a081014b5fd73d72170c7d5a89cce1638..a034030f055fed7e8e29643cd00e91a1
  
          return regionFile.getStatusIfCached(chunkPos.x, chunkPos.z);
 diff --git a/src/main/java/net/minecraft/server/level/ServerChunkCache.java b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-index 105cdab3a1c912299dbcfb670ace810b9202731c..bd03310950cdd2ee4d0d537facf78d44611df241 100644
+index 30d364b385da21544a810a76f436f06879d39b14..9f78dde8e41e3f02d0da9d31a10f3429972d3aab 100644
 --- a/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 +++ b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 @@ -49,6 +49,7 @@ import net.minecraft.world.level.storage.DimensionDataStorage;
@@ -514,7 +514,7 @@ index 105cdab3a1c912299dbcfb670ace810b9202731c..bd03310950cdd2ee4d0d537facf78d44
  
  public class ServerChunkCache extends ChunkSource {
  
-@@ -759,6 +760,13 @@ public class ServerChunkCache extends ChunkSource {
+@@ -770,6 +771,13 @@ public class ServerChunkCache extends ChunkSource {
                  // Paper end - optimise chunk tick iteration
                  ChunkPos chunkcoordintpair = chunk1.getPos();
  
@@ -527,9 +527,9 @@ index 105cdab3a1c912299dbcfb670ace810b9202731c..bd03310950cdd2ee4d0d537facf78d44
 +
                  if ((true || this.level.isNaturalSpawningAllowed(chunkcoordintpair)) && this.chunkMap.anyPlayerCloseEnoughForSpawning(holder, chunkcoordintpair, false)) { // Paper - optimise anyPlayerCloseEnoughForSpawning // Paper - the chunk is known ticking
                      chunk1.incrementInhabitedTime(j);
-                     if (flag2 && (this.spawnEnemies || this.spawnFriendlies) && this.level.getWorldBorder().isWithinBounds(chunkcoordintpair) && this.chunkMap.anyPlayerCloseEnoughForSpawning(holder, chunkcoordintpair, true)) { // Spigot // Paper - optimise anyPlayerCloseEnoughForSpawning & optimise chunk tick iteration
+                     if (flag2 && (!gg.pufferfish.pufferfish.PufferfishConfig.enableAsyncMobSpawning || _pufferfish_spawnCountsReady.get()) && (this.spawnEnemies || this.spawnFriendlies) && this.level.getWorldBorder().isWithinBounds(chunkcoordintpair) && this.chunkMap.anyPlayerCloseEnoughForSpawning(holder, chunkcoordintpair, true)) { // Spigot // Paper - optimise anyPlayerCloseEnoughForSpawning & optimise chunk tick iteration
 diff --git a/src/main/java/net/minecraft/server/level/ServerLevel.java b/src/main/java/net/minecraft/server/level/ServerLevel.java
-index 69ba84de4880a579c400b6daefdb98b44e9e28e8..932460aac50e7e9cc25c00f5c5e2a802a004c1e6 100644
+index 43bf3285729ec5cedb3de84f2b60673928b079db..2337d878a876afc339942fde2591900caf82794f 100644
 --- a/src/main/java/net/minecraft/server/level/ServerLevel.java
 +++ b/src/main/java/net/minecraft/server/level/ServerLevel.java
 @@ -175,6 +175,8 @@ import org.bukkit.event.world.GenericGameEvent;
@@ -552,7 +552,7 @@ index 69ba84de4880a579c400b6daefdb98b44e9e28e8..932460aac50e7e9cc25c00f5c5e2a802
          this.navigatingMobs = new ObjectOpenHashSet();
          this.blockEvents = new ObjectLinkedOpenHashSet();
          this.blockEventsToReschedule = new ArrayList(64);
-@@ -2382,6 +2384,11 @@ public class ServerLevel extends Level implements WorldGenLevel {
+@@ -2398,6 +2400,11 @@ public class ServerLevel extends Level implements WorldGenLevel {
                  return;
              }
              // CraftBukkit end
@@ -593,7 +593,7 @@ index 8950b220b9a3512cd4667beb7bdec0e82e07edc6..dab03b55325442b48875a3e6ca0169c1
          if (!io.papermc.paper.chunk.system.io.RegionFileIOThread.isRegionFileThread()) {
              io.papermc.paper.chunk.system.io.RegionFileIOThread.scheduleSave(
 diff --git a/src/main/java/net/minecraft/world/level/Level.java b/src/main/java/net/minecraft/world/level/Level.java
-index d6cfb0f147c8269b9ab8736a2e00294a83d560e0..cd53068f1c1897a7fe9e4f18593afb654f068918 100644
+index b8001bca2a33ec1e60566948a651400418a6e9e7..586533dd187301b4c956049b471e0b8dc49e31cf 100644
 --- a/src/main/java/net/minecraft/world/level/Level.java
 +++ b/src/main/java/net/minecraft/world/level/Level.java
 @@ -102,6 +102,7 @@ import org.bukkit.craftbukkit.util.CraftNamespacedKey;
@@ -604,7 +604,7 @@ index d6cfb0f147c8269b9ab8736a2e00294a83d560e0..cd53068f1c1897a7fe9e4f18593afb65
  // CraftBukkit end
  
  public abstract class Level implements LevelAccessor, AutoCloseable {
-@@ -950,6 +951,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
+@@ -1053,6 +1054,7 @@ public abstract class Level implements LevelAccessor, AutoCloseable {
                  toRemove.add(tickingblockentity); // Paper - use removeAll
                  // Spigot end
              } else if (this.shouldTickBlocksAt(tickingblockentity.getPos())) {
@@ -787,7 +787,7 @@ index e254b2d04e4fc1dc76c26f61ea38aeb27755143f..0572c468291144616c2b73c8b49b4777
      protected final ChunkPos chunkPos; public final long coordinateKey; public final int locX; public final int locZ; // Paper - cache coordinate key
      private long inhabitedTime;
 diff --git a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
-index 96d7927fb2a2a57e5bc10e680baefa2917a033e2..a0c348388ec4b2520949d2f809bb5482159fe022 100644
+index b367184f415b6e20c2fc02a1e8853003349a0a1b..1b5caa5b9da988ed5ca862d540891ecc842ae150 100644
 --- a/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 +++ b/src/main/java/net/minecraft/world/level/chunk/LevelChunk.java
 @@ -8,9 +8,10 @@ import com.mojang.logging.LogUtils;
@@ -819,21 +819,20 @@ index 96d7927fb2a2a57e5bc10e680baefa2917a033e2..a0c348388ec4b2520949d2f809bb5482
  
  public class LevelChunk extends ChunkAccess {
  
-@@ -85,9 +88,10 @@ public class LevelChunk extends ChunkAccess {
+@@ -85,8 +88,10 @@ public class LevelChunk extends ChunkAccess {
      @Nullable
      private LevelChunk.PostLoadProcessor postLoad;
      private final Int2ObjectMap<GameEventListenerRegistry> gameEventListenerRegistrySections;
 -    private final LevelChunkTicks<Block> blockTicks;
 -    private final LevelChunkTicks<Fluid> fluidTicks;
--
 +    @Nullable public ListTag entitiesToLoad; // MultiPaper
 +    @Nullable public ListTag blockEntitiesToLoad; // MultiPaper
 +    public LevelChunkTicks<Block> blockTicks; // MultiPaper - make public and non-final
 +    public LevelChunkTicks<Fluid> fluidTicks; // MultiPaper - make public and non-final
-     public LevelChunk(Level world, ChunkPos pos) {
-         this(world, pos, UpgradeData.EMPTY, new LevelChunkTicks<>(), new LevelChunkTicks<>(), 0L, (LevelChunkSection[]) null, (LevelChunk.PostLoadProcessor) null, (BlendingData) null);
-     }
-@@ -762,6 +766,12 @@ public class LevelChunk extends ChunkAccess {
+ 
+     // Pufferfish start - instead of using a random every time the chunk is ticked, define when lightning strikes preemptively
+     private int lightningTick;
+@@ -775,6 +780,12 @@ public class LevelChunk extends ChunkAccess {
  
      @Override
      public void removeBlockEntity(BlockPos pos) {
@@ -846,7 +845,7 @@ index 96d7927fb2a2a57e5bc10e680baefa2917a033e2..a0c348388ec4b2520949d2f809bb5482
          if (this.isInLevel()) {
              BlockEntity tileentity = (BlockEntity) this.blockEntities.remove(pos);
  
-@@ -895,6 +905,7 @@ public class LevelChunk extends ChunkAccess {
+@@ -908,6 +919,7 @@ public class LevelChunk extends ChunkAccess {
  
      public void onChunkNotEntityTicking(io.papermc.paper.chunk.system.scheduling.NewChunkHolder chunkHolder) {
          io.papermc.paper.chunk.system.ChunkSystem.onChunkNotEntityTicking(this, chunkHolder.vanillaChunkHolder);
@@ -854,7 +853,7 @@ index 96d7927fb2a2a57e5bc10e680baefa2917a033e2..a0c348388ec4b2520949d2f809bb5482
      }
      // Paper end - new load callbacks
  
-@@ -906,6 +917,7 @@ public class LevelChunk extends ChunkAccess {
+@@ -919,6 +931,7 @@ public class LevelChunk extends ChunkAccess {
          // Paper - rewrite chunk system - move into separate callback
          org.bukkit.Server server = this.level.getCraftServer();
          // Paper - rewrite chunk system - move into separate callback
@@ -862,7 +861,7 @@ index 96d7927fb2a2a57e5bc10e680baefa2917a033e2..a0c348388ec4b2520949d2f809bb5482
          ((ServerLevel)this.level).getChunkSource().chunkMap.playerChunkManager.onChunkLoad(this.chunkPos.x, this.chunkPos.z); // Paper - rewrite player chunk management
          if (server != null) {
              /*
-@@ -981,6 +993,7 @@ public class LevelChunk extends ChunkAccess {
+@@ -994,6 +1007,7 @@ public class LevelChunk extends ChunkAccess {
  
      @Override
      public boolean isUnsaved() {

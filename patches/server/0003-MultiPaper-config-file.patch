@@ -66,7 +66,7 @@ index c6fa6bcd66d61359124a8426b919493c6ec43f06..4c90daf89ee4529829651c72814901dd
              Bootstrap.validate();
              Util.startTimerHackThread();
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 69f7118fd686c7cbfcf2b1b1b33d608cb8167a41..ceb1102dacb9318863d8115ad9ebc6b4175a7ab8 100644
+index 58c203f479d108487817e26e28b444835e1e18f5..6f5dcbc025efa59332c38d6dd464f994151c693f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -251,6 +251,7 @@ import org.yaml.snakeyaml.constructor.SafeConstructor;
@@ -86,11 +86,11 @@ index 69f7118fd686c7cbfcf2b1b1b33d608cb8167a41..ceb1102dacb9318863d8115ad9ebc6b4
              this.helpMap.initializeCommands();
              this.syncCommands();
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index 1b366a36e78aecce6ae1022c4caa65923b8693a9..d2bf5559dd71927b66f33048482ebeaa2179ed1e 100644
+index ab05f4151e6ec7404a85ddb3a141ed39d9ed86d7..f06b4b4e4f9200283c8f39a967cadca542070744 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
-@@ -181,6 +181,14 @@ public class Main {
-                     .describedAs("Yml file");
+@@ -187,6 +187,14 @@ public class Main {
+                         .describedAs("Yml file");
                  // Purpur end
  
 +                // MultiPaper start

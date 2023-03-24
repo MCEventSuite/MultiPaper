@@ -6,10 +6,10 @@ Subject: [PATCH] Add temporary debug logs to check if a chunk can be not fully
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerChunkCache.java b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-index bd03310950cdd2ee4d0d537facf78d44611df241..45d0542d461ec26175d256d90b7e9c70d91b6ee9 100644
+index 9f78dde8e41e3f02d0da9d31a10f3429972d3aab..1f6159b599ed86a3f72d6ef251ef7682659a06d5 100644
 --- a/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 +++ b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-@@ -195,6 +195,9 @@ public class ServerChunkCache extends ChunkSource {
+@@ -198,6 +198,9 @@ public class ServerChunkCache extends ChunkSource {
          // try to fire sync
          int chunkStatusTicketLevel = 33 + ChunkStatus.getDistance(status);
          ChunkHolder playerChunk = this.chunkMap.getUpdatingChunkIfPresent(io.papermc.paper.util.CoordinateUtils.getChunkKey(chunkX, chunkZ));
@@ -19,7 +19,7 @@ index bd03310950cdd2ee4d0d537facf78d44611df241..45d0542d461ec26175d256d90b7e9c70
          if (playerChunk != null) {
              ChunkStatus holderStatus = playerChunk.getChunkHolderStatus();
              ChunkAccess immediate = playerChunk.getAvailableChunkNow();
-@@ -760,6 +763,14 @@ public class ServerChunkCache extends ChunkSource {
+@@ -771,6 +774,14 @@ public class ServerChunkCache extends ChunkSource {
                  // Paper end - optimise chunk tick iteration
                  ChunkPos chunkcoordintpair = chunk1.getPos();
  

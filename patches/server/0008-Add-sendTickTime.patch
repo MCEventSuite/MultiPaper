@@ -5,10 +5,10 @@ Subject: [PATCH] Add sendTickTime
 
 
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index 7e25d8deed4d81afd14124fce2282f351b17d808..d5a8737c58c5463dad6469ffedb23d4e68f33486 100644
+index fcdb6327e8aa93c4c2e3afe29826a69e3cffe101..77db280cd132860a8376f389e5f9e80934099f3c 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1469,6 +1469,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1471,6 +1471,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
          tickTimes10s.add(this.tickCount, j);
          tickTimes60s.add(this.tickCount, j);
          // Paper end

@@ -6,10 +6,10 @@ Subject: [PATCH] Only create a spawner state when we are actually spawning
 
 
 diff --git a/src/main/java/net/minecraft/server/level/ServerChunkCache.java b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-index 45d0542d461ec26175d256d90b7e9c70d91b6ee9..8acf64861e0f7245a86176efea184f391e42064c 100644
+index 1f6159b599ed86a3f72d6ef251ef7682659a06d5..ebbe630f97898242cac26d746e93726bb8ff7690 100644
 --- a/src/main/java/net/minecraft/server/level/ServerChunkCache.java
 +++ b/src/main/java/net/minecraft/server/level/ServerChunkCache.java
-@@ -714,7 +714,9 @@ public class ServerChunkCache extends ChunkSource {
+@@ -718,7 +718,9 @@ public class ServerChunkCache extends ChunkSource {
              //this.level.timings.countNaturalMobs.startTiming(); // Paper - timings // Purpur
              int l = this.distanceManager.getNaturalSpawnChunkCount();
              // Paper start - per player mob spawning
@@ -18,9 +18,9 @@ index 45d0542d461ec26175d256d90b7e9c70d91b6ee9..8acf64861e0f7245a86176efea184f39
 +            boolean flag2 = this.level.getGameRules().getBoolean(GameRules.RULE_DOMOBSPAWNING) && !this.level.players().isEmpty() && shouldSpawnCreaturesThisTick(); // CraftBukkit // MultiPaper - moved up and added shouldSpawnCreaturesThisTick
 +            if (flag2) // MultiPaper
              if ((this.spawnFriendlies || this.spawnEnemies) && this.chunkMap.playerMobDistanceMap != null) { // don't count mobs when animals and monsters are disabled
-                 // re-set mob counts
-                 for (ServerPlayer player : this.level.players) {
-@@ -735,7 +737,7 @@ public class ServerChunkCache extends ChunkSource {
+                 // Pufferfish start - moved down when async processing
+                 if (!gg.pufferfish.pufferfish.PufferfishConfig.enableAsyncMobSpawning) {
+@@ -746,7 +748,7 @@ public class ServerChunkCache extends ChunkSource {
              // Paper - moved down
  
              //gameprofilerfiller.popPush("spawnAndTick"); // Purpur
@@ -29,8 +29,8 @@ index 45d0542d461ec26175d256d90b7e9c70d91b6ee9..8acf64861e0f7245a86176efea184f39
  
              // Paper - only shuffle if per-player mob spawning is disabled
              // Paper - moved natural spawn event up
-@@ -845,6 +847,20 @@ public class ServerChunkCache extends ChunkSource {
-         }
+@@ -880,6 +882,20 @@ public class ServerChunkCache extends ChunkSource {
+         // Pufferfish end
      }
  
 +    // MultiPaper start

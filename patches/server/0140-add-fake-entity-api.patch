@@ -5,7 +5,7 @@ Subject: [PATCH] add fake entity api
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 69fe857650c549182878f0603411d0d840d6606a..7e3160c73bf9e5841695316dc5f33242597d4a7c 100644
+index ea9ef86106794f24dc99970ea0b10a443105edce..42780214cdd95e107cae4bbad1d8473da846cf83 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -59,6 +59,7 @@ import net.minecraft.network.protocol.game.VecDeltaCodec;
@@ -25,7 +25,7 @@ index 69fe857650c549182878f0603411d0d840d6606a..7e3160c73bf9e5841695316dc5f33242
      public void setOrigin(@javax.annotation.Nonnull Location location) {
          this.origin = location.toVector();
          this.originWorld = location.getWorld().getUID();
-@@ -4900,4 +4901,19 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -4986,4 +4987,19 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
          return false;
      }
      // Purpur end

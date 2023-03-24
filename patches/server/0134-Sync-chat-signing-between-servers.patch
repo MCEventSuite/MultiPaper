@@ -28,7 +28,7 @@ index 4d9bc4a62ebae0f3707900503576c64733de639f..f22276dd3b9ea7c76004952fee401433
  
      interface OutgoingChat {
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 5cd41810d75bbec3a025ec5a3d980d0a24b34825..fb7dcc88e7304293e61df37064174a99a5d8dd72 100644
+index 66bd99b1f28736078d3ca5a64348312ac53e453e..213373cba599609a4ea6041341a4c2b8889ce61f 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -250,8 +250,10 @@ import puregero.multipaper.MultiPaperEntityInteractHandler;
@@ -51,7 +51,7 @@ index 5cd41810d75bbec3a025ec5a3d980d0a24b34825..fb7dcc88e7304293e61df37064174a99
      private final FutureChain chatMessageChain;
      private static final long KEEPALIVE_LIMIT = Long.getLong("paper.playerconnection.keepalive", 30) * 1000; // Paper - provide property to set keepalive limit
      private static final int MAX_SIGN_LINE_LENGTH = Integer.getInteger("Paper.maxSignLength", 80); // Paper
-@@ -2691,6 +2693,8 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -2693,6 +2695,8 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
      public void handleChatAck(ServerboundChatAckPacket packet) {
          LastSeenMessagesValidator lastseenmessagesvalidator = this.lastSeenMessages;
  
@@ -60,7 +60,7 @@ index 5cd41810d75bbec3a025ec5a3d980d0a24b34825..fb7dcc88e7304293e61df37064174a99
          synchronized (this.lastSeenMessages) {
              if (!this.lastSeenMessages.applyOffset(packet.offset())) {
                  ServerGamePacketListenerImpl.LOGGER.warn("Failed to validate message acknowledgements from {}", this.player.getName().getString());
-@@ -2823,7 +2827,8 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -2825,7 +2829,8 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
  
      }
  
@@ -70,7 +70,7 @@ index 5cd41810d75bbec3a025ec5a3d980d0a24b34825..fb7dcc88e7304293e61df37064174a99
          MessageSignature messagesignature = message.signature();
  
          if (messagesignature != null) {
-@@ -2840,6 +2845,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -2842,6 +2847,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
                  this.disconnect(Component.translatable("multiplayer.disconnect.too_many_pending_chats"), org.bukkit.event.player.PlayerKickEvent.Cause.TOO_MANY_PENDING_CHATS); // Paper - kick event cause
              }
  
@@ -78,7 +78,7 @@ index 5cd41810d75bbec3a025ec5a3d980d0a24b34825..fb7dcc88e7304293e61df37064174a99
          }
      }
  
-@@ -3789,6 +3795,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -3791,6 +3797,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          this.chatMessageChain.append((executor) -> {
              this.player.setChatSession(session);
              this.server.getPlayerList().broadcastAll(new ClientboundPlayerInfoUpdatePacket(EnumSet.of(ClientboundPlayerInfoUpdatePacket.Action.INITIALIZE_CHAT), List.of(this.player)), this.player); // Paper

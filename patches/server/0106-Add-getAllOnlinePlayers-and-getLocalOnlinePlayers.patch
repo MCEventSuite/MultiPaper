@@ -65,7 +65,7 @@ index 15a14a2d7e0b8da01fc0c12b068ce371aae09154..ae4f1dccda2ed1fb66219823271e3e06
              this.playersByUUID.put(entityplayer1.getUUID(), entityplayer1);
          }
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 5187520309b1d8b0e3857ed25af7a767af7349e4..e69027ddab12a421c047f5bbefc9e6ef393f1195 100644
+index 50712dbc7b4ded47b12a15f511061d3efdb4c478..55d231d034b3636bf68fee1a7956c857ebd7be2d 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 @@ -287,6 +287,7 @@ public final class CraftServer implements Server {
@@ -146,7 +146,7 @@ index 5187520309b1d8b0e3857ed25af7a767af7349e4..e69027ddab12a421c047f5bbefc9e6ef
              String iterPlayerName = iterPlayer.getName();
  
              if (partialName.equalsIgnoreCase(iterPlayerName)) {
-@@ -2147,7 +2175,7 @@ public final class CraftServer implements Server {
+@@ -2152,7 +2180,7 @@ public final class CraftServer implements Server {
              }
          }
  
@@ -155,7 +155,7 @@ index 5187520309b1d8b0e3857ed25af7a767af7349e4..e69027ddab12a421c047f5bbefc9e6ef
  
          return players.toArray(new OfflinePlayer[players.size()]);
      }
-@@ -2318,6 +2346,8 @@ public final class CraftServer implements Server {
+@@ -2323,6 +2351,8 @@ public final class CraftServer implements Server {
              return ImmutableList.of();
          }
  
@@ -164,7 +164,7 @@ index 5187520309b1d8b0e3857ed25af7a767af7349e4..e69027ddab12a421c047f5bbefc9e6ef
          List<String> offers;
          Player player = (Player) sender;
          if (message.startsWith("/") || forceCommand) {
-@@ -2329,6 +2359,8 @@ public final class CraftServer implements Server {
+@@ -2334,6 +2364,8 @@ public final class CraftServer implements Server {
          TabCompleteEvent tabEvent = new TabCompleteEvent(player, message, offers, message.startsWith("/") || forceCommand, pos != null ? io.papermc.paper.util.MCUtil.toLocation(((CraftWorld) player.getWorld()).getHandle(), BlockPos.containing(pos)) : null); // Paper
          this.getPluginManager().callEvent(tabEvent);
  
@@ -173,7 +173,7 @@ index 5187520309b1d8b0e3857ed25af7a767af7349e4..e69027ddab12a421c047f5bbefc9e6ef
          return tabEvent.isCancelled() ? Collections.EMPTY_LIST : tabEvent.getCompletions();
      }
  
-@@ -2363,7 +2395,7 @@ public final class CraftServer implements Server {
+@@ -2368,7 +2400,7 @@ public final class CraftServer implements Server {
          List<String> completions = new ArrayList<String>();
          PlayerChatTabCompleteEvent event = new PlayerChatTabCompleteEvent(player, message, completions);
          String token = event.getLastToken();
@@ -182,7 +182,7 @@ index 5187520309b1d8b0e3857ed25af7a767af7349e4..e69027ddab12a421c047f5bbefc9e6ef
              if (player.canSee(p) && StringUtil.startsWithIgnoreCase(p.getName(), token)) {
                  completions.add(p.getName());
              }
-@@ -2864,14 +2896,14 @@ public final class CraftServer implements Server {
+@@ -2869,14 +2901,14 @@ public final class CraftServer implements Server {
  
          @Override
          public void broadcast(BaseComponent component) {

@@ -18,18 +18,18 @@ index 745e792482f61c571e2efbd4200dd1bdaef6e474..84c6daf76767e8f17e9abb7c58291dc0
  
      public boolean isInfiniteDuration() {
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index 84c89c2660b39b955455a22512186c5d33c664b3..0fa6f32e3ebc82a6b4dbacc7c1d9d16d64300617 100644
+index 393b3227ca0693767244146220579922c432e0ee..2d8041bdc1dd22d79472649d2e9c6bb862fb05d2 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -144,6 +144,7 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
- import co.aikar.timings.MinecraftTimings; // Paper
+ // Multipaper
  import puregero.multipaper.ExternalServerConnection;
  import puregero.multipaper.MultiPaper;
 +import puregero.multipaper.MultiPaperEffectsHandler;
  import puregero.multipaper.MultiPaperEntityInteractHandler;
  import puregero.multipaper.externalserverprotocol.EntityUpdatePacket;
  import puregero.multipaper.externalserverprotocol.HurtEntityPacket;
-@@ -1271,29 +1272,32 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -1272,29 +1273,32 @@ public abstract class LivingEntity extends Entity implements Attackable {
  
      protected void onEffectAdded(MobEffectInstance effect, @Nullable Entity source) {
          this.effectsDirty = true;

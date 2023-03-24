@@ -5,7 +5,7 @@ Subject: [PATCH] Add peer-to-peer connection
 
 
 diff --git a/src/main/java/com/destroystokyo/paper/Metrics.java b/src/main/java/com/destroystokyo/paper/Metrics.java
-index 95ac9317bc316d352c3873e6e5b0b434d10eb71d..d1e76baadc7636cd3ccb849fafc51ec3be6aad9d 100644
+index 184c6fc0c18fc64fc1fae22839422d3927f4e8b8..f7c2894adf00088a6c825b86f99f39e994ee6e12 100644
 --- a/src/main/java/com/destroystokyo/paper/Metrics.java
 +++ b/src/main/java/com/destroystokyo/paper/Metrics.java
 @@ -9,6 +9,8 @@ import org.bukkit.plugin.Plugin;
@@ -17,7 +17,7 @@ index 95ac9317bc316d352c3873e6e5b0b434d10eb71d..d1e76baadc7636cd3ccb849fafc51ec3
  
  import javax.net.ssl.HttpsURLConnection;
  import java.io.ByteArrayOutputStream;
-@@ -606,6 +608,7 @@ public class Metrics {
+@@ -607,6 +609,7 @@ public class Metrics {
                  metrics.addCustomChart(new Metrics.SimplePie("online_mode", () -> Bukkit.getOnlineMode() ? "online" : (io.papermc.paper.configuration.GlobalConfiguration.get().proxies.isProxyOnlineMode() ? "bungee" : "offline"))); // Purpur
                  metrics.addCustomChart(new Metrics.SimplePie("purpur_version", () -> (org.bukkit.craftbukkit.Main.class.getPackage().getImplementationVersion() != null) ? org.bukkit.craftbukkit.Main.class.getPackage().getImplementationVersion() : "unknown")); // Purpur
                  metrics.addCustomChart(new Metrics.SimplePie("multipaper_version", () -> (CraftServer.class.getPackage().getImplementationVersion() != null) ? CraftServer.class.getPackage().getImplementationVersion() : "unknown")); // MultiPaper
@@ -26,7 +26,7 @@ index 95ac9317bc316d352c3873e6e5b0b434d10eb71d..d1e76baadc7636cd3ccb849fafc51ec3
                  metrics.addCustomChart(new Metrics.DrilldownPie("java_version", () -> {
                      Map<String, Map<String, Integer>> map = new HashMap<>();
 diff --git a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
-index bd09e2a96590a78c98a48833023d09e731545aaf..a924c9e80d4470ac2be216735937ab1f08944f2f 100644
+index 582467e3419c23446b20d3076fbfce22115250a8..f2e57c932bfaacf0f6b88833552f40f412e6a749 100644
 --- a/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 +++ b/src/main/java/net/minecraft/server/dedicated/DedicatedServer.java
 @@ -62,6 +62,7 @@ import co.aikar.timings.MinecraftTimings; // Paper
@@ -37,7 +37,7 @@ index bd09e2a96590a78c98a48833023d09e731545aaf..a924c9e80d4470ac2be216735937ab1f
  // CraftBukkit end
  
  public class DedicatedServer extends MinecraftServer implements ServerInterface {
-@@ -301,6 +302,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
+@@ -304,6 +305,8 @@ public class DedicatedServer extends MinecraftServer implements ServerInterface
          }
          // Purpur end
  

@@ -5,22 +5,22 @@ Subject: [PATCH] Hurt external entities
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/LivingEntity.java b/src/main/java/net/minecraft/world/entity/LivingEntity.java
-index fc69b057a099378364ef7166fd9209a4911de451..84c89c2660b39b955455a22512186c5d33c664b3 100644
+index bc7c2f1964302ddd779d465bb3dcfbc0c0ff7a4b..393b3227ca0693767244146220579922c432e0ee 100644
 --- a/src/main/java/net/minecraft/world/entity/LivingEntity.java
 +++ b/src/main/java/net/minecraft/world/entity/LivingEntity.java
 @@ -142,8 +142,11 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
  // CraftBukkit end
  
- import co.aikar.timings.MinecraftTimings; // Paper
+ // Multipaper
 +import puregero.multipaper.ExternalServerConnection;
  import puregero.multipaper.MultiPaper;
 +import puregero.multipaper.MultiPaperEntityInteractHandler;
  import puregero.multipaper.externalserverprotocol.EntityUpdatePacket;
 +import puregero.multipaper.externalserverprotocol.HurtEntityPacket;
+ // Multipaper end
  
  public abstract class LivingEntity extends Entity implements Attackable {
- 
-@@ -1361,6 +1364,15 @@ public abstract class LivingEntity extends Entity implements Attackable {
+@@ -1371,6 +1374,15 @@ public abstract class LivingEntity extends Entity implements Attackable {
  
      @Override
      public boolean hurt(DamageSource source, float amount) {

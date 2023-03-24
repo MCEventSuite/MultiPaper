@@ -5,10 +5,10 @@ Subject: [PATCH] Add player syncing between servers
 
 
 diff --git a/src/main/java/com/destroystokyo/paper/Metrics.java b/src/main/java/com/destroystokyo/paper/Metrics.java
-index d1e76baadc7636cd3ccb849fafc51ec3be6aad9d..d477d16232797fb0bebf5b5ae2ff30beea3e91ec 100644
+index f7c2894adf00088a6c825b86f99f39e994ee6e12..a0cd00896bcc634aecc40b22768f2bdcab8f4a6c 100644
 --- a/src/main/java/com/destroystokyo/paper/Metrics.java
 +++ b/src/main/java/com/destroystokyo/paper/Metrics.java
-@@ -604,7 +604,7 @@ public class Metrics {
+@@ -605,7 +605,7 @@ public class Metrics {
                      return minecraftVersion;
                  }));
  
@@ -41,10 +41,10 @@ index c5d030379a25e17befafd566e5ec61592bba7eba..a0b084260ae9ed0d769598b662c6cf98
              this.channel.close(); // We can't wait as this may be called from an event loop.
              this.disconnectedReason = disconnectReason;
 diff --git a/src/main/java/net/minecraft/server/MinecraftServer.java b/src/main/java/net/minecraft/server/MinecraftServer.java
-index d5a8737c58c5463dad6469ffedb23d4e68f33486..f404fac1401a96a7f57f6f60a09bc455aa91180a 100644
+index 77db280cd132860a8376f389e5f9e80934099f3c..00f439e5a884ae98d61bd54bbda09c6aa11a4320 100644
 --- a/src/main/java/net/minecraft/server/MinecraftServer.java
 +++ b/src/main/java/net/minecraft/server/MinecraftServer.java
-@@ -1424,6 +1424,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
+@@ -1426,6 +1426,7 @@ public abstract class MinecraftServer extends ReentrantBlockableEventLoop<TickTa
              this.lastServerStatus = i;
              this.status = this.buildServerStatus();
          }
@@ -53,7 +53,7 @@ index d5a8737c58c5463dad6469ffedb23d4e68f33486..f404fac1401a96a7f57f6f60a09bc455
          // Paper start - incremental chunk and player saving
          int playerSaveInterval = io.papermc.paper.configuration.GlobalConfiguration.get().playerAutoSave.rate;
 diff --git a/src/main/java/net/minecraft/server/level/ServerEntity.java b/src/main/java/net/minecraft/server/level/ServerEntity.java
-index 11d7aef930ca283950f7b353b033f3ec5fe41efb..0cf15179488de2a5bde76d33751c6808c5744563 100644
+index 6afee2a744a3498d4a0eee35f77cde444f73d12c..a6734355fbc2ebc1c800257358a9d04141e60f3e 100644
 --- a/src/main/java/net/minecraft/server/level/ServerEntity.java
 +++ b/src/main/java/net/minecraft/server/level/ServerEntity.java
 @@ -48,6 +48,7 @@ import net.minecraft.server.network.ServerPlayerConnection;
@@ -64,7 +64,7 @@ index 11d7aef930ca283950f7b353b033f3ec5fe41efb..0cf15179488de2a5bde76d33751c6808
  // CraftBukkit end
  
  public class ServerEntity {
-@@ -419,7 +420,7 @@ public class ServerEntity {
+@@ -421,7 +422,7 @@ public class ServerEntity {
  
      private void broadcastAndSend(Packet<?> packet) {
          this.broadcast.accept(packet);
@@ -155,7 +155,7 @@ index 74238a87d1ff3391aac5812b24b84af228baeaa4..f5551ba283d5ffe3ae1e3f39ccdfd71b
              this.updateEffectVisibility();
              return event; // Paper
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index a5312007294cdb4ef6d3bbad3083acfac11a456d..4a134c4cb5d2fa6a992c3689bde003b02a6bb4cb 100644
+index ae3c1bd67c144fe971d4df6df2ca171b431b6fc5..d65d2e908e13d25fa39e86e609f31d2cd029b17e 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -29,6 +29,8 @@ import java.util.function.UnaryOperator;
@@ -211,7 +211,7 @@ index a5312007294cdb4ef6d3bbad3083acfac11a456d..4a134c4cb5d2fa6a992c3689bde003b0
          this.connection.send(new ClientboundDisconnectPacket(ichatbasecomponent), PacketSendListener.thenRun(() -> {
              this.connection.disconnect(ichatbasecomponent);
          }));
-@@ -2200,7 +2205,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -2201,7 +2206,7 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
          this.player.disconnect();
          // Paper start - Adventure
          quitMessage = quitMessage == null ? this.server.getPlayerList().remove(this.player) : this.server.getPlayerList().remove(this.player, quitMessage); // Paper - pass in quitMessage to fix kick message not being used

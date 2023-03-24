@@ -5,7 +5,7 @@ Subject: [PATCH] Sync entity velocity changes
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 146c6d0ad9678fbaff6857c631a03d3196b636bd..0e64171a075a45d584f35dcd4f05fc7ffddb337d 100644
+index 1fff5da68a9242c4c4d69e4335f9365ba20f8b12..dd830d509c83cb44ccf87ddd2c3fed55826235c8 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
 @@ -157,6 +157,7 @@ import puregero.multipaper.MultiPaper;
@@ -16,7 +16,7 @@ index 146c6d0ad9678fbaff6857c631a03d3196b636bd..0e64171a075a45d584f35dcd4f05fc7f
  import puregero.multipaper.externalserverprotocol.EntityRemovePacket;
  import puregero.multipaper.externalserverprotocol.EntityUpdateNBTPacket;
  import puregero.multipaper.externalserverprotocol.EntityUpdateWithDependenciesPacket;
-@@ -4494,6 +4495,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -4580,6 +4581,7 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
  
      public void addDeltaMovement(Vec3 velocity) {
          this.setDeltaMovement(this.getDeltaMovement().add(velocity));

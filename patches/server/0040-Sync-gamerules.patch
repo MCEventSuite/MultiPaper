@@ -5,7 +5,7 @@ Subject: [PATCH] Sync gamerules
 
 
 diff --git a/src/main/java/net/minecraft/world/level/GameRules.java b/src/main/java/net/minecraft/world/level/GameRules.java
-index edd2c9d0cf5a81c779011cb4215d496a8987b784..a8eddc5bb98950e5d67db59b97e0da39c0ee8892 100644
+index 29d1f78dbc8410f9292f409b17705acde55979df..46152f6fc91651a0870bf54f31e43fe76e130ed4 100644
 --- a/src/main/java/net/minecraft/world/level/GameRules.java
 +++ b/src/main/java/net/minecraft/world/level/GameRules.java
 @@ -27,6 +27,7 @@ import net.minecraft.network.protocol.game.ClientboundGameEventPacket;
@@ -16,7 +16,7 @@ index edd2c9d0cf5a81c779011cb4215d496a8987b784..a8eddc5bb98950e5d67db59b97e0da39
  
  public class GameRules {
  
-@@ -335,6 +336,7 @@ public class GameRules {
+@@ -356,6 +357,7 @@ public class GameRules {
          protected void updateFromArgument(CommandContext<CommandSourceStack> context, String name, GameRules.Key<BooleanValue> gameRuleKey) { // Paper start
              io.papermc.paper.event.world.WorldGameRuleChangeEvent event = new io.papermc.paper.event.world.WorldGameRuleChangeEvent(context.getSource().getBukkitWorld(), context.getSource().getBukkitSender(), (org.bukkit.GameRule<Boolean>) org.bukkit.GameRule.getByName(gameRuleKey.toString()), String.valueOf(BoolArgumentType.getBool(context, name)));
              if (!event.callEvent()) return;
@@ -24,7 +24,7 @@ index edd2c9d0cf5a81c779011cb4215d496a8987b784..a8eddc5bb98950e5d67db59b97e0da39
              this.value = Boolean.parseBoolean(event.getValue());
              // Paper end
          }
-@@ -403,6 +405,7 @@ public class GameRules {
+@@ -424,6 +426,7 @@ public class GameRules {
          protected void updateFromArgument(CommandContext<CommandSourceStack> context, String name, GameRules.Key<IntegerValue> gameRuleKey) { // Paper start
              io.papermc.paper.event.world.WorldGameRuleChangeEvent event = new io.papermc.paper.event.world.WorldGameRuleChangeEvent(context.getSource().getBukkitWorld(), context.getSource().getBukkitSender(), (org.bukkit.GameRule<Integer>) org.bukkit.GameRule.getByName(gameRuleKey.toString()), String.valueOf(IntegerArgumentType.getInteger(context, name)));
              if (!event.callEvent()) return;

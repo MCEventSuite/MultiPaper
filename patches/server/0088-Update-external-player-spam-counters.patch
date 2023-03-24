@@ -5,7 +5,7 @@ Subject: [PATCH] Update external player spam counters
 
 
 diff --git a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
-index 3453f9d11eeb65d1b22d0571a625effba1de2cfd..afd0ffaa5aa943427d393c35a7a1efcca2abb542 100644
+index 452118bc1f73e11d441e7141dbad6bbd80c36f08..9da87fd1737a206f3af1a3404a0c6ef36265b906 100644
 --- a/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 +++ b/src/main/java/net/minecraft/server/network/ServerGamePacketListenerImpl.java
 @@ -453,20 +453,23 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
@@ -46,7 +46,7 @@ index 3453f9d11eeb65d1b22d0571a625effba1de2cfd..afd0ffaa5aa943427d393c35a7a1efcc
  
          if (this.player.getLastActionTime() > 0L && this.server.getPlayerIdleTimeout() > 0 && Util.getMillis() - this.player.getLastActionTime() > (long) (this.server.getPlayerIdleTimeout() * 1000 * 60) && !this.player.wonGame) { // Paper - Prevent AFK kick while watching end credits.
              // Purpur start
-@@ -3799,4 +3802,22 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
+@@ -3801,4 +3804,22 @@ public class ServerGamePacketListenerImpl implements ServerPlayerConnection, Tic
  
          InteractionResult run(ServerPlayer player, Entity entity, InteractionHand hand);
      }

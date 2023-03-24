@@ -5,10 +5,10 @@ Subject: [PATCH] Fix Ikea V1 dupe
 
 
 diff --git a/src/main/java/net/minecraft/world/entity/Entity.java b/src/main/java/net/minecraft/world/entity/Entity.java
-index 0e64171a075a45d584f35dcd4f05fc7ffddb337d..3a6f872c494665c9ab8bcb0c332df9aaaf3a0ecf 100644
+index dd830d509c83cb44ccf87ddd2c3fed55826235c8..0ff0f2b4018621b687c91126cae8b22fc5f371a5 100644
 --- a/src/main/java/net/minecraft/world/entity/Entity.java
 +++ b/src/main/java/net/minecraft/world/entity/Entity.java
-@@ -3001,6 +3001,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
+@@ -3035,6 +3035,12 @@ public abstract class Entity implements Nameable, EntityAccess, CommandSource {
                  }).collect(ImmutableList.toImmutableList());
              }
  
